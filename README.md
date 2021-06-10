@@ -9,7 +9,7 @@ Accepts either a string or an async function to resolve a URL based on the curre
 ## Installation
 
 ```
-sanity install iframe
+sanity install iframe-pane
 ```
 
 This is designed to be used as a [Component inside of a View](https://www.sanity.io/docs/structure-builder-reference#c0c8284844b7).
