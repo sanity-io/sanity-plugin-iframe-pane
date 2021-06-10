@@ -1,0 +1,52 @@
+{
+  "name": "sanity-plugin-iframe",
+  "version": "1.0.0",
+  "description": "Display any URL in a View Pane, along with helpful buttons to Copy the URL or open in a new tab",
+  "main": "lib/Iframe.js",
+  "scripts": {
+    "build": "sanipack build",
+    "watch": "sanipack build --watch",
+    "prepublishOnly": "sanipack build && sanipack verify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://raw.githubusercontent.com/SimeonGriggs/sanity-plugin-iframe"
+  },
+  "keywords": [
+    "sanity",
+    "sanity-plugin"
+  ],
+  "author": "Simeon Griggs <simeon@sanity.io>",
+  "license": "MIT",
+  "dependencies": {
+    "@sanity/ui": "^0.34.1",
+    "prop-types": "15.7.2",
+    "react-icons": "^4.2.0"
+  },
+  "devDependencies": {
+    "eslint": "7.28.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-config-sanity": "5.1.0",
+    "eslint-plugin-react": "7.24.0",
+    "prettier": "2.3.1",
+    "sanipack": "2.0.1"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0"
+  },
+  "prettier": {
+    "semi": false,
+    "printWidth": 100,
+    "bracketSpacing": false,
+    "singleQuote": true
+  },
+  "eslintConfig": {
+    "parser": "sanipack/babel/eslint-parser",
+    "extends": [
+      "sanity",
+      "sanity/react",
+      "prettier",
+      "prettier/react"
+    ]
+  }
+}
