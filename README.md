@@ -16,7 +16,7 @@ This is designed to be used as a [Component inside of a View](https://www.sanity
 
 ```js
 // ./src/deskStructure.js
-import Iframe from 'sanity-plugin-iframe'
+import Iframe from 'sanity-plugin-iframe-pane'
 
 // ...all other list items
 
