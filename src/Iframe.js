@@ -71,7 +71,7 @@ function Iframe({document: sanityDocument, options}) {
             padding={[2]}
             text="Open"
             tone="primary"
-            onClick={() => window.open(url)}
+            onClick={() => window.open(displayUrl)}
           />
         </Flex>
         <iframe title="preview" style={{width: '100%', height: '100%'}} frameBorder="0" src={displayUrl} />
