@@ -1,8 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react'
 import PropTypes from 'prop-types'
-import {FiCopy, FiShare} from 'react-icons/fi'
 import {Flex, Text, Button, studioTheme, ThemeProvider} from '@sanity/ui'
-
+import {CopyIcon, LeaveIcon} from '@sanity/icons'
 function Iframe({document: sanityDocument, options}) {
   const {url} = options
   const [displayUrl, setDisplayUrl] = useState(typeof url === 'string' ? url : ``)
@@ -57,7 +56,7 @@ function Iframe({document: sanityDocument, options}) {
           </Text>
           <Button
             fontSize={[1]}
-            icon={FiCopy}
+            icon={CopyIcon}
             style={{marginLeft: `0.5rem`}}
             padding={[2]}
             text="Copy"
@@ -66,7 +65,7 @@ function Iframe({document: sanityDocument, options}) {
           />
           <Button
             fontSize={[1]}
-            icon={FiShare}
+            icon={LeaveIcon}
             style={{marginLeft: `0.5rem`}}
             padding={[2]}
             text="Open"
