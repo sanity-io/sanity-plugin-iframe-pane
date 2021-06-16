@@ -19,6 +19,7 @@
   "author": "Simeon Griggs <simeon@sanity.io>",
   "license": "MIT",
   "dependencies": {
+    "@sanity/icons": "^1.1.2",
     "@sanity/ui": "^0.34.1",
     "prop-types": "15.7.2"
   },
