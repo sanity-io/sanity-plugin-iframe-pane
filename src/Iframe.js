@@ -89,7 +89,7 @@ Iframe.propTypes = {
     }),
   }),
   options: PropTypes.shape({
-    url: PropTypes.oneOf([PropTypes.string, PropTypes.func]),
+    url: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   }),
 }
 
