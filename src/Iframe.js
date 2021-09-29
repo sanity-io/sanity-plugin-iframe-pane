@@ -1,10 +1,18 @@
 import React, {useEffect, useState, useRef} from 'react'
 import PropTypes from 'prop-types'
-import {Flex, Text, Button, studioTheme, ThemeProvider} from '@sanity/ui'
-import {CopyIcon, LeaveIcon} from '@sanity/icons'
+import {Box, Flex, Text, Button, Stack, ThemeProvider, Card} from '@sanity/ui'
+import {CopyIcon, LeaveIcon, MobileDeviceIcon} from '@sanity/icons'
+
+const sizes = {
+  desktop: {width: '100%', height: `100%`, maxHeight: '100%'},
+  mobile: {width: 414, height: `100%`, maxHeight: 736},
+}
 function Iframe({document: sanityDocument, options}) {
-  const {url} = options
+  const {url, defaultSize} = options
   const [displayUrl, setDisplayUrl] = useState(typeof url === 'string' ? url : ``)
+  const [iframeSize, setIframeSize] = useState(
+    defaultSize && sizes?.[defaultSize] ? defaultSize : `desktop`
+  )
   const input = useRef()
   const {displayed} = sanityDocument
 
@@ -34,7 +42,7 @@ function Iframe({document: sanityDocument, options}) {
   }
 
   return (
-    <ThemeProvider theme={studioTheme}>
+    <ThemeProvider>
       <textarea
         style={{position: `absolute`, pointerEvents: `none`, opacity: 0}}
         ref={input}
@@ -43,37 +51,48 @@ function Iframe({document: sanityDocument, options}) {
         tabIndex="-1"
       />
       <Flex direction="column" style={{height: `100%`}}>
-        <Flex
-          style={{
-            alignItems: `center`,
-            borderBottom: `1px solid var(--card-border-color)`,
-            padding: `0.5rem`,
-            flexShrink: 0,
-          }}
-        >
-          <Text style={{flex: 1}} size={0}>
-            {displayUrl}
-          </Text>
-          <Button
-            fontSize={[1]}
-            icon={CopyIcon}
-            style={{marginLeft: `0.5rem`}}
-            padding={[2]}
-            text="Copy"
-            tone="default"
-            onClick={() => handleCopy()}
-          />
-          <Button
-            fontSize={[1]}
-            icon={LeaveIcon}
-            style={{marginLeft: `0.5rem`}}
-            padding={[2]}
-            text="Open"
-            tone="primary"
-            onClick={() => window.open(displayUrl)}
-          />
-        </Flex>
-        <iframe title="preview" style={{width: '100%', height: '100%'}} frameBorder="0" src={displayUrl} />
+        <Card padding={2} borderBottom={1}>
+          <Flex align="center" gap={2}>
+            <Flex align="center" gap={1}>
+              <Button
+                fontSize={[1]}
+                padding={2}
+                tone="primary"
+                mode={iframeSize === 'mobile' ? 'default' : 'ghost'}
+                icon={MobileDeviceIcon}
+                onClick={() => setIframeSize(iframeSize === 'mobile' ? 'desktop' : 'mobile')}
+              />
+            </Flex>
+            <Box flex={1}>
+              <Text size={0} textOverflow="ellipsis">
+                {displayUrl}
+              </Text>
+            </Box>
+            <Flex align="center" gap={1}>
+              <Button
+                fontSize={[1]}
+                icon={CopyIcon}
+                padding={[2]}
+                text="Copy"
+                tone="default"
+                onClick={() => handleCopy()}
+              />
+              <Button
+                fontSize={[1]}
+                icon={LeaveIcon}
+                padding={[2]}
+                text="Open"
+                tone="primary"
+                onClick={() => window.open(displayUrl)}
+              />
+            </Flex>
+          </Flex>
+        </Card>
+        <Card tone="transparent" padding={iframeSize === 'mobile' ? 2 : 0} style={{height: `100%`}}>
+          <Flex align="center" justify="center" style={{height: `100%`}}>
+            <iframe title="preview" style={sizes[iframeSize]} frameBorder="0" src={displayUrl} />
+          </Flex>
+        </Card>
       </Flex>
     </ThemeProvider>
   )
@@ -84,7 +103,7 @@ Iframe.propTypes = {
     displayed: PropTypes.shape({
       _id: PropTypes.string.isRequired,
       slug: PropTypes.shape({
-        current: PropTypes.string
+        current: PropTypes.string,
       }),
     }),
   }),

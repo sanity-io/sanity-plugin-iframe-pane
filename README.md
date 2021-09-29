@@ -23,10 +23,12 @@ import Iframe from 'sanity-plugin-iframe-pane'
 S.view
   .component(Iframe)
   .options({
-    // Accepts an async function
+    // Required: Accepts an async function
     url: (doc) => resolveProductionUrl(doc),
     // OR a string
     url: `https://sanity.io`,
+    // Optional: Set the default size,
+    defaultSize: `mobile`, // default is `desktop`
   })
   .title('Preview')
 ```
