@@ -4,8 +4,8 @@ import {Box, Flex, Text, Button, Stack, ThemeProvider, Card} from '@sanity/ui'
 import {CopyIcon, LeaveIcon, MobileDeviceIcon} from '@sanity/icons'
 
 const sizes = {
-  desktop: {width: '100%', height: `100%`, maxHeight: '100%'},
-  mobile: {width: 414, height: `100%`, maxHeight: 736},
+  desktop: {backgroundColor: `white`, width: `100%`, height: `100%`, maxHeight: `100%`},
+  mobile: {backgroundColor: `white`, width: 414, height: `100%`, maxHeight: 736},
 }
 function Iframe({document: sanityDocument, options}) {
   const {url, defaultSize} = options
