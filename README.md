@@ -27,8 +27,13 @@ S.view
     url: (doc) => resolveProductionUrl(doc),
     // OR a string
     url: `https://sanity.io`,
-    // Optional: Set the default size,
-    defaultSize: `mobile`, // default is `desktop`
+    // Optional: Set the default size
+    defaultSize: `mobile`, // default `desktop`
+    // Optional: Add a refresh button, or refresh on new document revisions
+    refresh: {
+      button: true, // default `undefined`
+      revision: true, // default `undefined`
+    },
   })
   .title('Preview')
 ```

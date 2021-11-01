@@ -1,19 +1,20 @@
 import React, {useEffect, useState, useRef} from 'react'
 import PropTypes from 'prop-types'
 import {Box, Flex, Text, Button, Stack, ThemeProvider, Card} from '@sanity/ui'
-import {CopyIcon, LeaveIcon, MobileDeviceIcon} from '@sanity/icons'
+import {ResetIcon, CopyIcon, LeaveIcon, MobileDeviceIcon} from '@sanity/icons'
 
 const sizes = {
   desktop: {backgroundColor: `white`, width: `100%`, height: `100%`, maxHeight: `100%`},
   mobile: {backgroundColor: `white`, width: 414, height: `100%`, maxHeight: 736},
 }
 function Iframe({document: sanityDocument, options}) {
-  const {url, defaultSize} = options
+  const {url, defaultSize, reload} = options
   const [displayUrl, setDisplayUrl] = useState(typeof url === 'string' ? url : ``)
   const [iframeSize, setIframeSize] = useState(
     defaultSize && sizes?.[defaultSize] ? defaultSize : `desktop`
   )
   const input = useRef()
+  const iframe = useRef()
   const {displayed} = sanityDocument
 
   function handleCopy() {
@@ -25,6 +26,22 @@ function Iframe({document: sanityDocument, options}) {
     // eslint-disable-next-line react/prop-types
     document.execCommand('copy')
   }
+
+  function handleReload() {
+    if (!iframe?.current) {
+      return
+    }
+
+    // Funky way to reload an iframe without CORS issuies
+    iframe.current.src = iframe.current.src
+  }
+
+  // Reload on new revisions
+  useEffect(() => {
+    if (reload?.revision) {
+      handleReload()
+    }
+  }, [displayed?._rev])
 
   useEffect(() => {
     const getUrl = async () => {
@@ -69,12 +86,24 @@ function Iframe({document: sanityDocument, options}) {
               </Text>
             </Box>
             <Flex align="center" gap={1}>
+              {reload?.button ? (
+                <Button
+                  fontSize={[1]}
+                  padding={2}
+                  icon={ResetIcon}
+                  // text="Reload"
+                  title="Reload"
+                  aria-label="Reload"
+                  onClick={() => handleReload()}
+                />
+              ) : null}
               <Button
                 fontSize={[1]}
                 icon={CopyIcon}
                 padding={[2]}
-                text="Copy"
-                tone="default"
+                // text="Copy"
+                title="Copy"
+                aria-label="Copy"
                 onClick={() => handleCopy()}
               />
               <Button
@@ -90,7 +119,13 @@ function Iframe({document: sanityDocument, options}) {
         </Card>
         <Card tone="transparent" padding={iframeSize === 'mobile' ? 2 : 0} style={{height: `100%`}}>
           <Flex align="center" justify="center" style={{height: `100%`}}>
-            <iframe title="preview" style={sizes[iframeSize]} frameBorder="0" src={displayUrl} />
+            <iframe
+              ref={iframe}
+              title="preview"
+              style={sizes[iframeSize]}
+              frameBorder="0"
+              src={displayUrl}
+            />
           </Flex>
         </Card>
       </Flex>
