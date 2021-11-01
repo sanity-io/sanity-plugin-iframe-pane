@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react'
 import PropTypes from 'prop-types'
 import {Box, Flex, Text, Button, Stack, ThemeProvider, Card} from '@sanity/ui'
-import {ResetIcon, CopyIcon, LeaveIcon, MobileDeviceIcon} from '@sanity/icons'
+import {UndoIcon, CopyIcon, LeaveIcon, MobileDeviceIcon} from '@sanity/icons'
 
 const sizes = {
   desktop: {backgroundColor: `white`, width: `100%`, height: `100%`, maxHeight: `100%`},
@@ -90,7 +90,7 @@ function Iframe({document: sanityDocument, options}) {
                 <Button
                   fontSize={[1]}
                   padding={2}
-                  icon={ResetIcon}
+                  icon={UndoIcon}
                   // text="Reload"
                   title="Reload"
                   aria-label="Reload"
