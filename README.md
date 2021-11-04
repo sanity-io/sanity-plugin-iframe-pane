@@ -29,8 +29,8 @@ S.view
     url: `https://sanity.io`,
     // Optional: Set the default size
     defaultSize: `mobile`, // default `desktop`
-    // Optional: Add a refresh button, or refresh on new document revisions
-    refresh: {
+    // Optional: Add a reload button, or reload on new document revisions
+    reload: {
       button: true, // default `undefined`
       revision: true, // default `undefined`
     },
