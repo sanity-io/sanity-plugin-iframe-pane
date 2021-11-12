@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react'
 import PropTypes from 'prop-types'
-import {Box, Flex, Text, Button, Stack, ThemeProvider, Card} from '@sanity/ui'
+import {Box, Flex, Text, Button, ThemeProvider, Card, Spinner} from '@sanity/ui'
 import {UndoIcon, CopyIcon, LeaveIcon, MobileDeviceIcon} from '@sanity/icons'
 
 const sizes = {
@@ -51,11 +51,16 @@ function Iframe({document: sanityDocument, options}) {
     }
 
     if (!displayUrl && displayed?._id) getUrl()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [displayed])
 
   if (!displayUrl || typeof displayUrl !== 'string') {
-    return <div style={{padding: `1rem`}}>Loading...</div>
+    return (
+      <ThemeProvider>
+        <Flex padding={5} items="center" justify="center">
+          <Spinner />
+        </Flex>
+      </ThemeProvider>
+    )
   }
 
   return (
