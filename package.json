@@ -1,6 +1,6 @@
 {
   "name": "sanity-plugin-iframe-pane",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Display any URL in a View Pane, along with helpful buttons to Copy the URL or open in a new tab",
   "main": "lib/Iframe.js",
   "scripts": {
@@ -21,7 +21,8 @@
   "dependencies": {
     "@sanity/icons": "^1.2.1",
     "@sanity/ui": "^0.36.12",
-    "prop-types": "15.7.2"
+    "prop-types": "15.7.2",
+    "usehooks-ts": "^1.2.0"
   },
   "devDependencies": {
     "eslint": "7.32.0",

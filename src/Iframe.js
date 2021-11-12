@@ -2,6 +2,7 @@ import React, {useEffect, useState, useRef} from 'react'
 import PropTypes from 'prop-types'
 import {Box, Flex, Text, Button, ThemeProvider, Card, Spinner} from '@sanity/ui'
 import {UndoIcon, CopyIcon, LeaveIcon, MobileDeviceIcon} from '@sanity/icons'
+import { useCopyToClipboard } from 'usehooks-ts'
 
 const sizes = {
   desktop: {backgroundColor: `white`, width: `100%`, height: `100%`, maxHeight: `100%`},
@@ -16,15 +17,12 @@ function Iframe({document: sanityDocument, options}) {
   const input = useRef()
   const iframe = useRef()
   const {displayed} = sanityDocument
+  const [value, copy] = useCopyToClipboard()
 
   function handleCopy() {
-    if (!input?.current) return
+    if (!input?.current?.value) return
 
-    input.current.select()
-    input.current.setSelectionRange(0, 99999)
-
-    // eslint-disable-next-line react/prop-types
-    document.execCommand('copy')
+    copy(input.current.value)
   }
 
   function handleReload() {
