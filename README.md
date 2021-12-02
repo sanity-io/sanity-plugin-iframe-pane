@@ -4,7 +4,7 @@ Display any URL in a View Pane, along with helpful buttons to Copy the URL or op
 
 Accepts either a string or an async function to resolve a URL based on the current document.
 
-![Iframe View Pane](https://user-images.githubusercontent.com/9684022/121473207-3548de00-c9ba-11eb-88a0-7d6c748b3f00.png)
+![Iframe View Pane](https://user-images.githubusercontent.com/9684022/144389599-496e1e50-62a7-4d5c-903a-889885eb8aab.png)
 
 ## Installation
 
