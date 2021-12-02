@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef} from 'react'
 import PropTypes from 'prop-types'
 import {Box, Flex, Text, Button, ThemeProvider, Card, Spinner} from '@sanity/ui'
 import {UndoIcon, CopyIcon, LeaveIcon, MobileDeviceIcon} from '@sanity/icons'
-import { useCopyToClipboard } from 'usehooks-ts'
+import {useCopyToClipboard} from 'usehooks-ts'
 
 const sizes = {
   desktop: {backgroundColor: `white`, width: `100%`, height: `100%`, maxHeight: `100%`},
@@ -39,17 +39,23 @@ function Iframe({document: sanityDocument, options}) {
     if (reload?.revision) {
       handleReload()
     }
-  }, [displayed?._rev])
+  }, [displayed._rev])
 
+  // Set initial URL and refresh on new revisions
   useEffect(() => {
     const getUrl = async () => {
       const resolveUrl = await url(displayed)
 
-      setDisplayUrl(resolveUrl)
+      // Only update state if URL has changed
+      if (resolveUrl !== displayUrl) {
+        setDisplayUrl(resolveUrl)
+      }
     }
 
-    if (!displayUrl && displayed?._id) getUrl()
-  }, [displayed])
+    if (typeof url !== 'string') {
+      getUrl()
+    }
+  }, [displayed._rev])
 
   if (!displayUrl || typeof displayUrl !== 'string') {
     return (
