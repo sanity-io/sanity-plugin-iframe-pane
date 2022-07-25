@@ -1,23 +1,40 @@
 import React, {useEffect, useState, useRef} from 'react'
-import PropTypes from 'prop-types'
+import {SanityDocumentLike} from 'sanity'
 import {Box, Flex, Text, Button, ThemeProvider, Card, Spinner} from '@sanity/ui'
 import {UndoIcon, CopyIcon, LeaveIcon, MobileDeviceIcon} from '@sanity/icons'
-import {useCopyToClipboard} from 'usehooks-ts'
+
+import useCopyToClipboard from './hooks/useCopytoClipboard'
 
 const sizes = {
   desktop: {backgroundColor: `white`, width: `100%`, height: `100%`, maxHeight: `100%`},
   mobile: {backgroundColor: `white`, width: 414, height: `100%`, maxHeight: 736},
 }
-function Iframe({document: sanityDocument, options}) {
-  const {url, defaultSize, reload} = options
+
+export type IframeOptions = {
+  url: string | ((document: SanityDocumentLike) => unknown)
+  defaultSize?: 'desktop' | 'mobile'
+  reload: {
+    revision: boolean
+    button: boolean
+  }
+}
+
+export type IframeProps = {
+  document: {
+    displayed: SanityDocumentLike
+  }
+  options: IframeOptions
+}
+
+function Iframe(props: IframeProps) {
+  const {document: sanityDocument, options} = props
+  const {url, defaultSize = `desktop`, reload} = options
   const [displayUrl, setDisplayUrl] = useState(typeof url === 'string' ? url : ``)
-  const [iframeSize, setIframeSize] = useState(
-    defaultSize && sizes?.[defaultSize] ? defaultSize : `desktop`
-  )
+  const [iframeSize, setIframeSize] = useState(sizes?.[defaultSize])
   const input = useRef()
   const iframe = useRef()
   const {displayed} = sanityDocument
-  const [value, copy] = useCopyToClipboard()
+  const [, copy] = useCopyToClipboard()
 
   function handleCopy() {
     if (!input?.current?.value) return
@@ -31,6 +48,7 @@ function Iframe({document: sanityDocument, options}) {
     }
 
     // Funky way to reload an iframe without CORS issuies
+    // eslint-disable-next-line no-self-assign
     iframe.current.src = iframe.current.src
   }
 
@@ -39,12 +57,12 @@ function Iframe({document: sanityDocument, options}) {
     if (reload?.revision) {
       handleReload()
     }
-  }, [displayed._rev])
+  }, [displayed._rev, reload?.revision])
 
   // Set initial URL and refresh on new revisions
   useEffect(() => {
     const getUrl = async () => {
-      const resolveUrl = await url(displayed)
+      const resolveUrl = typeof url === 'function' ? await url(displayed) : ``
 
       // Only update state if URL has changed
       if (resolveUrl !== displayUrl) {
@@ -52,9 +70,10 @@ function Iframe({document: sanityDocument, options}) {
       }
     }
 
-    if (typeof url !== 'string') {
+    if (typeof url === 'function') {
       getUrl()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayed._rev])
 
   if (!displayUrl || typeof displayUrl !== 'string') {
@@ -74,7 +93,7 @@ function Iframe({document: sanityDocument, options}) {
         ref={input}
         value={displayUrl}
         readOnly
-        tabIndex="-1"
+        tabIndex={-1}
       />
       <Flex direction="column" style={{height: `100%`}}>
         <Card padding={2} borderBottom={1}>
@@ -100,7 +119,6 @@ function Iframe({document: sanityDocument, options}) {
                   fontSize={[1]}
                   padding={2}
                   icon={UndoIcon}
-                  // text="Reload"
                   title="Reload"
                   aria-label="Reload"
                   onClick={() => handleReload()}
@@ -110,7 +128,6 @@ function Iframe({document: sanityDocument, options}) {
                 fontSize={[1]}
                 icon={CopyIcon}
                 padding={[2]}
-                // text="Copy"
                 title="Copy"
                 aria-label="Copy"
                 onClick={() => handleCopy()}
@@ -140,20 +157,6 @@ function Iframe({document: sanityDocument, options}) {
       </Flex>
     </ThemeProvider>
   )
-}
-
-Iframe.propTypes = {
-  document: PropTypes.shape({
-    displayed: PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      slug: PropTypes.shape({
-        current: PropTypes.string,
-      }),
-    }),
-  }),
-  options: PropTypes.shape({
-    url: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  }),
 }
 
 export default Iframe
