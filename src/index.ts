@@ -1,28 +1,5 @@
-import {createPlugin} from 'sanity'
+import IframeComponent, { IframeOptions as IframeOptionsType } from "./Iframe";
 
-interface MyPluginConfig {
-  /* nothing here yet */
-}
+export default IframeComponent;
 
-/**
- * ## Usage in sanity.config.ts (or .js)
- *
- * ```
- * import {createConfig} from 'sanity'
- * import {myPlugin} from 'sanity-plugin-iframe-pane-v3'
- *
- * export const createConfig({
- *     /...
- *     plugins: [
- *         myPlugin()
- *     ]
- * })
- * ```
- */
-export const myPlugin = createPlugin<MyPluginConfig | void>((config = {}) => {
-  // eslint-disable-next-line no-console
-  console.log('hello from sanity-plugin-iframe-pane-v3')
-  return {
-    name: 'sanity-plugin-iframe-pane-v3',
-  }
-})
+export type IframeOptions = IframeOptionsType;
