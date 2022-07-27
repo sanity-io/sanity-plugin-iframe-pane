@@ -30,7 +30,7 @@ function Iframe(props: IframeProps) {
   const {document: sanityDocument, options} = props
   const {url, defaultSize = `desktop`, reload} = options
   const [displayUrl, setDisplayUrl] = useState(typeof url === 'string' ? url : ``)
-  const [iframeSize, setIframeSize] = useState(sizes?.[defaultSize])
+  const [iframeSize, setIframeSize] = useState(defaultSize)
   const input = useRef()
   const iframe = useRef()
   const {displayed} = sanityDocument
