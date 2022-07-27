@@ -12,13 +12,13 @@ Accepts either a string or an async function to resolve a URL based on the curre
 ## Installation
 
 ```
-npm install --save sanity-plugin-iframe-pane-v3
+npm install --save sanity-plugin-iframe-pane@studio-v3
 ```
 
 or
 
 ```
-yarn add sanity-plugin-iframe-pane-v3
+yarn add sanity-plugin-iframe-pane@studio-v3
 ```
 
 This is designed to be used as a [Component inside of a View](https://www.sanity.io/docs/structure-builder-reference#c0c8284844b7).
