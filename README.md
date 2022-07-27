@@ -1,5 +1,8 @@
 # sanity-plugin-iframe-pane
 
+> NOTE This is for the Studio v2 version of the plugin
+> There is a [Studio v3 specific version in the studio-v3 branch](https://github.com/SimeonGriggs/sanity-plugin-iframe-pane/tree/studio-v3)
+
 Display any URL in a View Pane, along with helpful buttons to Copy the URL or open in a new tab.
 
 Accepts either a string or an async function to resolve a URL based on the current document.
@@ -16,7 +19,7 @@ This is designed to be used as a [Component inside of a View](https://www.sanity
 
 ```js
 // ./src/deskStructure.js
-import Iframe from 'sanity-plugin-iframe-pane'
+import Iframe from "sanity-plugin-iframe-pane";
 
 // ...all other list items
 
@@ -35,7 +38,7 @@ S.view
       revision: true, // default `undefined`
     },
   })
-  .title('Preview')
+  .title("Preview");
 ```
 
 ## License
