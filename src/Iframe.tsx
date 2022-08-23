@@ -17,6 +17,7 @@ export type IframeOptions = {
     revision: boolean
     button: boolean
   }
+  id: string
 }
 
 export type IframeProps = {
@@ -28,7 +29,7 @@ export type IframeProps = {
 
 function Iframe(props: IframeProps) {
   const {document: sanityDocument, options} = props
-  const {url, defaultSize = `desktop`, reload} = options
+  const {url, defaultSize = `desktop`, reload, id} = options
   const [displayUrl, setDisplayUrl] = useState(typeof url === 'string' ? url : ``)
   const [iframeSize, setIframeSize] = useState(defaultSize)
   const input = useRef()
@@ -57,7 +58,7 @@ function Iframe(props: IframeProps) {
     if (reload?.revision) {
       handleReload()
     }
-  }, [displayed._rev, reload?.revision])
+  }, [displayed._rev, reload?.revision, id])
 
   // Set initial URL and refresh on new revisions
   useEffect(() => {
@@ -74,7 +75,7 @@ function Iframe(props: IframeProps) {
       getUrl()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [displayed._rev])
+  }, [displayed._rev,id])
 
   if (!displayUrl || typeof displayUrl !== 'string') {
     return (
