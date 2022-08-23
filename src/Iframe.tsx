@@ -75,7 +75,7 @@ function Iframe(props: IframeProps) {
       getUrl()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [displayed._rev,id])
+  }, [displayed._rev, id])
 
   if (!displayUrl || typeof displayUrl !== 'string') {
     return (
