@@ -50,7 +50,7 @@ package-lock.json
 .cache
 
 # Compiled plugin
-/lib
+# /lib – included to allow installing from github directly
 
 .parcel-cache
 /.idea
