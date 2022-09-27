@@ -15,6 +15,7 @@ export type IframeOptions = {
   defaultSize?: 'desktop' | 'mobile'
   reload: {
     revision: boolean
+    revisionDelay?: number
     button: boolean
   }
 }
@@ -55,7 +56,9 @@ function Iframe(props: IframeProps) {
   // Reload on new revisions
   useEffect(() => {
     if (reload?.revision) {
-      handleReload()
+      setTimeout(() => {
+        handleReload()
+      }, reload?.revisionDelay)
     }
   }, [displayed._rev, reload?.revision])
 
