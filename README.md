@@ -37,7 +37,7 @@ S.view
     reload: {
       button: true, // default `undefined`
       revision: true, // default `undefined`
-      revisionDelay: 500, // add a delay (in ms) before the automatic reload on document revisions
+      revisionDelay: 500, // optional - add a delay (in ms) before the automatic reload on document revisions
     },
   })
   .title("Preview");
