@@ -36,8 +36,7 @@ S.view
     // Optional: Add a reload button, or reload on new document revisions
     reload: {
       button: true, // default `undefined`
-      revision: true, // default `undefined`
-      revisionDelay: 500, // optional - add a delay (in ms) before the automatic reload on document revisions
+      revision: true, // boolean | number. default `undefined`. If a number is provided, add a delay (in ms) before the automatic reload on document revision
     },
   })
   .title("Preview");

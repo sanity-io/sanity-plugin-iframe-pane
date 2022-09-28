@@ -14,8 +14,7 @@ export type IframeOptions = {
   url: string | ((document: SanityDocumentLike) => unknown)
   defaultSize?: 'desktop' | 'mobile'
   reload: {
-    revision: boolean
-    revisionDelay?: number
+    revision: boolean | number
     button: boolean
   }
 }
@@ -55,10 +54,10 @@ function Iframe(props: IframeProps) {
 
   // Reload on new revisions
   useEffect(() => {
-    if (reload?.revision) {
+    if (reload?.revision || reload.revision == 0) {
       setTimeout(() => {
         handleReload()
-      }, reload?.revisionDelay)
+      }, Number(reload?.revision))
     }
   }, [displayed._rev, reload?.revision])
 
