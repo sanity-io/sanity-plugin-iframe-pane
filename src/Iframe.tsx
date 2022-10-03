@@ -54,7 +54,7 @@ function Iframe(props: IframeProps) {
 
   // Reload on new revisions
   useEffect(() => {
-    if (reload?.revision || reload.revision == 0) {
+    if (reload?.revision || reload?.revision == 0) {
       setTimeout(() => {
         handleReload()
       }, Number(reload?.revision))
