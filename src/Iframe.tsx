@@ -33,7 +33,7 @@ export type IframeProps = {
 
 function Iframe(props: IframeProps) {
   const {document: sanityDocument, options} = props
-  const {url, defaultSize = `desktop`, reload, attributes} = options
+  const {url, defaultSize = `desktop`, reload, attributes = {}} = options
   const [displayUrl, setDisplayUrl] = useState(typeof url === 'string' ? url : ``)
   const [iframeSize, setIframeSize] = useState(defaultSize)
   const input = useRef()
