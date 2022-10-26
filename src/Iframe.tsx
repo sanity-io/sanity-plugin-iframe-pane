@@ -17,6 +17,11 @@ export type IframeOptions = {
     revision: boolean | number
     button: boolean
   }
+  attributes?: Partial<{
+    allow: string
+    referrerPolicy: string
+    sandbox: string
+  }>
 }
 
 export type IframeProps = {
@@ -28,7 +33,7 @@ export type IframeProps = {
 
 function Iframe(props: IframeProps) {
   const {document: sanityDocument, options} = props
-  const {url, defaultSize = `desktop`, reload} = options
+  const {url, defaultSize = `desktop`, reload, attributes = {}} = options
   const [displayUrl, setDisplayUrl] = useState(typeof url === 'string' ? url : ``)
   const [iframeSize, setIframeSize] = useState(defaultSize)
   const input = useRef()
@@ -153,6 +158,7 @@ function Iframe(props: IframeProps) {
               style={sizes[iframeSize]}
               frameBorder="0"
               src={displayUrl}
+              {...attributes}
             />
           </Flex>
         </Card>
