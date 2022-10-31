@@ -1,7 +1,10 @@
 # sanity-plugin-iframe-pane
 
-> NOTE
-> This is for the Studio v3 version of the plugin
+> **NOTE**
+>
+> This is the **Sanity Studio v3 version** of sanity-plugin-iframe-pane.
+>
+> For the v2 version, please refer to the [v2-branch](https://github.com/sanity-io/sanity-plugin-iframe-pane).
 
 Display any URL in a View Pane, along with helpful buttons to Copy the URL or open in a new tab.
 
@@ -20,6 +23,8 @@ or
 ```
 yarn add sanity-plugin-iframe-pane@studio-v3
 ```
+
+## Usage
 
 This is designed to be used as a [Component inside of a View](https://www.sanity.io/docs/structure-builder-reference#c0c8284844b7).
 
@@ -49,5 +54,19 @@ S.view
 
 ## License
 
-MIT © Simeon Griggs
-See LICENSE
+MIT-licensed. See LICENSE.
+
+## Develop & test
+
+This plugin uses [@sanity/plugin-kit](https://github.com/sanity-io/plugin-kit)
+with default configuration for build & watch scripts.
+
+See [Testing a plugin in Sanity Studio](https://github.com/sanity-io/plugin-kit#testing-a-plugin-in-sanity-studio)
+on how to run this plugin with hotreload in the studio.
+
+### Release new version
+
+Run ["CI & Release" workflow](https://github.com/sanity-io/sanity-plugin-iframe-pane/actions/workflows/main.yml).
+Make sure to select the studio-v3 branch and check "Release new version".
+
+Semantic release will only release on configured branches, so it is safe to run release on any branch.

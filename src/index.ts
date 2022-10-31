@@ -1,5 +1,5 @@
-import IframeComponent, { IframeOptions as IframeOptionsType } from "./Iframe";
+import IframeComponent, {IframeOptions as IframeOptionsType} from './Iframe'
 
-export default IframeComponent;
+export default IframeComponent
 
-export type IframeOptions = IframeOptionsType;
+export type IframeOptions = IframeOptionsType
