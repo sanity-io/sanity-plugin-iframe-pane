@@ -5,13 +5,16 @@
   "author": "Simeon Griggs <simeon@sanity.io>",
   "license": "MIT",
   "source": "./src/index.ts",
-  "main": "./lib/cjs/index.js",
-  "module": "./lib/esm/index.js",
-  "types": "./lib/types/index.d.ts",
+  "main": "./lib/index.js",
+  "module": "./lib/index.esm.js",
+  "types": "./lib/src/index.d.ts",
   "exports": {
     ".": {
-      "require": "./lib/cjs/index.js",
-      "default": "./lib/esm/index.js"
+      "types": "./lib/src/index.d.ts",
+      "source": "./src/index.ts",
+      "import": "./lib/index.esm.js",
+      "require": "./lib/index.js",
+      "default": "./lib/index.esm.js"
     }
   },
   "files": [
@@ -23,9 +26,9 @@
   "scripts": {
     "clean": "rimraf lib",
     "lint": "eslint .",
-    "prebuild": "npm run clean && plugin-kit verify-package --silent",
-    "build": "parcel build --no-cache",
-    "watch": "parcel watch",
+    "prebuild": "npm run clean && plugin-kit verify-package --silent && pkg-utils",
+    "build": "pkg-utils build",
+    "watch": "pkg-utils watch",
     "link-watch": "plugin-kit link-watch",
     "prepublishOnly": "npm run build",
     "prepare": "husky install"
@@ -44,14 +47,13 @@
     "usehooks-ts": "^2.6.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.1.2",
-    "@commitlint/config-conventional": "^17.1.0",
-    "@parcel/packager-ts": "^2.6.2",
-    "@parcel/transformer-typescript-types": "^2.6.2",
-    "@sanity/plugin-kit": "^1.1.0-ecosystem-preset.9",
+    "@commitlint/cli": "^17.2.0",
+    "@commitlint/config-conventional": "^17.2.0",
+    "@sanity/pkg-utils": "^1.16.2",
+    "@sanity/plugin-kit": "^2.0.7",
     "@sanity/semantic-release-preset": "^2.0.2",
-    "@typescript-eslint/eslint-plugin": "^5.41.0",
-    "@typescript-eslint/parser": "^5.41.0",
+    "@typescript-eslint/eslint-plugin": "^5.42.0",
+    "@typescript-eslint/parser": "^5.42.0",
     "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-sanity": "^6.0.0",
@@ -60,16 +62,15 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
-    "parcel": "~2.6.0",
     "prettier": "^2.7.1",
     "react": "^18.0.0",
     "rimraf": "^3.0.2",
-    "sanity": "dev-preview || 3.0.0-dev-preview.22",
-    "typescript": "~4.7.0"
+    "sanity": "dev-preview || 3.0.0-rc.0",
+    "typescript": "^4.8.4"
   },
   "peerDependencies": {
     "react": "^18.0.0",
-    "sanity": "dev-preview || 3.0.0-dev-preview.22"
+    "sanity": "dev-preview || 3.0.0-rc.0"
   },
   "bugs": {
     "url": "https://github.com/sanity-io/sanity-plugin-iframe-pane/issues"
