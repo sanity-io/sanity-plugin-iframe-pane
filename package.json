@@ -1,6 +1,6 @@
 {
   "name": "sanity-plugin-iframe-pane",
-  "version": "2.0.1-v3-studio.1",
+  "version": "2.0.1-v3-studio.2",
   "description": "Display any URL in a View Pane, along with helpful buttons to Copy the URL or open in a new tab",
   "author": "Simeon Griggs <simeon@sanity.io>",
   "license": "MIT",
