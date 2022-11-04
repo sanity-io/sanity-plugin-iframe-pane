@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1-v3-studio.3](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.0.1-v3-studio.2...v2.0.1-v3-studio.3) (2022-11-04)
+
+### Bug Fixes
+
+- **deps:** pkg-utils & @sanity/plugin-kit ([0ba33f0](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/0ba33f011a254972cd3181b461d226a6096353ac))
+
 ## [2.0.1-v3-studio.2](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.0.1-v3-studio.1...v2.0.1-v3-studio.2) (2022-11-03)
 
 ### Bug Fixes
