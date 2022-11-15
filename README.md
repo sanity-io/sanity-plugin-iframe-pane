@@ -1,10 +1,7 @@
 # sanity-plugin-iframe-pane
 
-> **NOTE**
->
-> This is the **Sanity Studio v3 version** of sanity-plugin-iframe-pane.
->
-> For the v2 version, please refer to the [v2-branch](https://github.com/sanity-io/sanity-plugin-iframe-pane).
+> This is a **Sanity Studio v3** plugin.
+> For the v2 version, please refer to the [v2-branch](https://github.com/sanity-io/sanity-plugin-iframe-pane/tree/studio-v2).
 
 Display any URL in a View Pane, along with helpful buttons to Copy the URL or open in a new tab.
 
@@ -15,13 +12,13 @@ Accepts either a string or an async function to resolve a URL based on the curre
 ## Installation
 
 ```
-npm install --save sanity-plugin-iframe-pane@studio-v3
+npm install --save sanity-plugin-iframe-pane
 ```
 
 or
 
 ```
-yarn add sanity-plugin-iframe-pane@studio-v3
+yarn add sanity-plugin-iframe-pane
 ```
 
 ## Usage
