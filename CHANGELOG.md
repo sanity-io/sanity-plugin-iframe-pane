@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.0.0...v2.0.1) (2022-11-16)
+
+### Bug Fixes
+
+- version bump for npm ([cdbbb95](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/cdbbb9591efb6298b90bc6c4dd5fe6250c7c758b))
+
 ## [2.0.0](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v1.0.0...v2.0.0) (2022-11-16)
 
 ### ⚠ BREAKING CHANGES
