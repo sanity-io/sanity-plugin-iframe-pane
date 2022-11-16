@@ -67,3 +67,4 @@ Run ["CI & Release" workflow](https://github.com/sanity-io/sanity-plugin-iframe-
 Make sure to select the studio-v3 branch and check "Release new version".
 
 Semantic release will only release on configured branches, so it is safe to run release on any branch.
+
