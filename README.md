@@ -26,34 +26,53 @@ yarn add sanity-plugin-iframe-pane
 This is designed to be used as a [Component inside of a View](https://www.sanity.io/docs/structure-builder-reference#c0c8284844b7).
 
 ```js
-// ./src/deskStructure.js
+// ./sanity.config.ts
+import {defineConfig} from 'sanity'
+import {deskTool} from 'sanity/desk'
 import Iframe from 'sanity-plugin-iframe-pane'
 
-// ...all other list items
+import {schemaTypes} from './schemas'
 
-S.view
-  .component(Iframe)
-  .options({
-    // Required: Accepts an async function
-    url: (doc) => resolveProductionUrl(doc),
-    // OR a string
-    url: `https://sanity.io`,
-    // Optional: Set the default size
-    defaultSize: `mobile`, // default `desktop`
-    // Optional: Add a reload button, or reload on new document revisions
-    reload: {
-      button: true, // default `undefined`
-      revision: true, // boolean | number. default `undefined`. If a number is provided, add a delay (in ms) before the automatic reload on document revision
-    },
-    // Optional: Pass attributes to the underlying `iframe` element:
-    // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe
-    attributes: {
-      allow: 'fullscreen' // string, optional
-      referrerPolicy: 'strict-origin-when-cross-origin' // string, optional
-      sandbox: 'allow-same-origin' // string, optional
-    }
-  })
-  .title('Preview')
+export default defineConfig({
+  name: '<project_name>',
+  title: '<project_title>',
+  projectId: '<project_id>',
+  dataset: '<dataset_name>',
+  apiVersion: '<current_date>',
+  plugins: [
+    deskTool({
+      defaultDocumentNode: (S, {schemaType}) => {
+        // Replace <schema_type> with the type where you want to show the preview option
+        if (schemaType === '<schema_type>') {
+          return S.document().views([
+            S.view.form(),
+            S.view
+              .component(Iframe)
+              .options({
+                // Required: Accepts an async function
+                url: (document: any) =>
+                  `https://sanity.io/${schemaType}/${document.slug.current}`,
+                // OR a string
+                // url: `https://sanity.io`,
+                // Optional: Set the default size
+                defaultSize: `mobile`, // default `desktop`
+                // Optional: Add a reload button, or reload on new document revisions
+                reload: {
+                  button: true,
+                  revision: true,
+                },
+              })
+              .title('Preview'),
+          ])
+        }
+        return null
+      },
+    }),
+  ],
+  schema: {
+    types: schemaTypes,
+  },
+})
 ```
 
 ## License
