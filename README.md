@@ -1,7 +1,7 @@
 # sanity-plugin-iframe-pane
 
->This is a **Sanity Studio v2** plugin.
-> There is a [Studio v3 specific version in the studio-v3 branch](https://github.com/SimeonGriggs/sanity-plugin-iframe-pane/tree)
+> This is a **Sanity Studio v2** plugin.
+> There is a [Studio v3 specific version](https://github.com/sanity-io/sanity-plugin-iframe-pane)
 
 Display any URL in a View Pane, along with helpful buttons to Copy the URL or open in a new tab.
 
@@ -11,8 +11,15 @@ Accepts either a string or an async function to resolve a URL based on the curre
 
 ## Installation
 
+```sh
+yarn add sanity-plugin-iframe-pane@studio-v2
 ```
-sanity install iframe-pane@studio-v2
+
+Next, add `"iframe-pane"` to `sanity.json` plugins array:
+```json
+"plugins": [
+  "iframe-pane"
+]
 ```
 
 This is designed to be used as a [Component inside of a View](https://www.sanity.io/docs/structure-builder-reference#c0c8284844b7).

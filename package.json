@@ -2,38 +2,41 @@
   "name": "sanity-plugin-iframe-pane",
   "version": "1.1.4",
   "description": "Display any URL in a View Pane, along with helpful buttons to Copy the URL or open in a new tab",
-  "main": "lib/Iframe.js",
-  "scripts": {
-    "build": "sanipack build",
-    "watch": "sanipack build --watch",
-    "prepublishOnly": "sanipack build && sanipack verify",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/SimeonGriggs/sanity-plugin-iframe-pane.git"
-  },
   "keywords": [
     "sanity",
     "sanity-plugin"
   ],
-  "author": "Simeon Griggs <simeon@sanity.io>",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:sanity-io/sanity-plugin-iframe-pane.git"
+  },
   "license": "MIT",
+  "author": "Simeon Griggs <simeon@sanity.io>",
+  "main": "lib/Iframe.js",
+  "scripts": {
+    "build": "sanipack build",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prepublishOnly": "sanipack build && sanipack verify",
+    "watch": "sanipack build --watch"
+  },
   "dependencies": {
     "@sanity/icons": "^1.2.1",
     "@sanity/ui": "^0.36.12"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.2.0",
+    "@commitlint/config-conventional": "^17.2.0",
     "@sanity/eslint-config-studio": "^2.0.0",
+    "@sanity/semantic-release-preset": "^2.0.2",
     "eslint": "8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-sanity": "6.0.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.30.1",
     "prettier": "2.4.1",
-    "sanity": "^2.29.3",
     "sanipack": "2.0.1",
+    "sanity": "^2.29.3",
     "typescript": "^4.7.4"
   },
   "peerDependencies": {
