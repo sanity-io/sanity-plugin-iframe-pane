@@ -2,6 +2,6 @@
   "extends": "@sanity/semantic-release-preset",
   "branches": [
     "main",
-    { "name": "studio-v2", "channel": "studio-v2", "range": "1.1.x" }
+    { "name": "studio-v2", "channel": "studio-v2", "range": "1.x" }
   ]
 }
