@@ -48,9 +48,9 @@ S.view
     // Optional: Pass attributes to the underlying `iframe` element:
     // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe
     attributes: {
-      allow: 'fullscreen' // string, optional
-      referrerPolicy: 'strict-origin-when-cross-origin' // string, optional
-      sandbox: 'allow-same-origin' // string, optional
+      allow: 'fullscreen', // string, optional
+      referrerPolicy: 'strict-origin-when-cross-origin', // string, optional
+      sandbox: 'allow-same-origin', // string, optional
     }
   })
   .title('Preview')
