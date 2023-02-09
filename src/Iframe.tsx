@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react'
-import {SanityDocumentLike} from 'sanity'
+import {SanityDocumentLike, useClient, SanityClient} from 'sanity'
 import {Box, Flex, Text, Button, ThemeProvider, Card, Spinner} from '@sanity/ui'
 import {UndoIcon, CopyIcon, LeaveIcon, MobileDeviceIcon} from '@sanity/icons'
 import {HTMLAttributeReferrerPolicy} from 'react'
@@ -31,7 +31,7 @@ const sizes: SizeProps = {
 }
 
 export type IframeOptions = {
-  url: string | ((document: SanityDocumentLike) => unknown)
+  url: string | ((document: SanityDocumentLike, client: SanityClient) => unknown)
   defaultSize?: 'desktop' | 'mobile'
   reload: {
     revision: boolean | number
@@ -62,6 +62,7 @@ function Iframe(props: IframeProps) {
   const iframe = useRef<HTMLIFrameElement>(null)
   const {displayed} = sanityDocument
   const [, copy] = useCopyToClipboard()
+  const client = useClient({apiVersion: "2022-11-16"})
 
   function handleCopy() {
     if (!input?.current?.value) return
@@ -91,7 +92,7 @@ function Iframe(props: IframeProps) {
   // Set initial URL and refresh on new revisions
   useEffect(() => {
     const getUrl = async () => {
-      const resolveUrl = typeof url === 'function' ? await url(displayed) : ``
+      const resolveUrl = typeof url === 'function' ? await url(displayed, client) : ``
 
       // Only update state if URL has changed
       if (resolveUrl !== displayUrl && resolveUrl && typeof resolveUrl === 'string') {
