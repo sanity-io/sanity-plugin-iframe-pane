@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import React, {useEffect, useState, useRef} from 'react'
 import {SanityDocumentLike} from 'sanity'
 import {Box, Flex, Text, Button, ThemeProvider, Card, Spinner} from '@sanity/ui'
@@ -33,6 +34,7 @@ const sizes: SizeProps = {
 export type IframeOptions = {
   url: string | ((document: SanityDocumentLike) => unknown)
   defaultSize?: 'desktop' | 'mobile'
+  loader?: boolean | string
   reload: {
     revision: boolean | number
     button: boolean
@@ -41,6 +43,7 @@ export type IframeOptions = {
     allow: string
     referrerPolicy: HTMLAttributeReferrerPolicy | undefined
     sandbox: string
+    onLoad: () => void
   }>
 }
 
@@ -55,9 +58,10 @@ const DEFAULT_SIZE = `desktop`
 
 function Iframe(props: IframeProps) {
   const {document: sanityDocument, options} = props
-  const {url, defaultSize = DEFAULT_SIZE, reload, attributes = {}} = options
+  const {url, defaultSize = DEFAULT_SIZE, reload, loader, attributes = {}} = options
   const [displayUrl, setDisplayUrl] = useState(url && typeof url === 'string' ? url : ``)
   const [iframeSize, setIframeSize] = useState(sizes?.[defaultSize] ? defaultSize : DEFAULT_SIZE)
+  const [loading, setLoading] = useState(false)
   const input = useRef<HTMLTextAreaElement>(null)
   const iframe = useRef<HTMLIFrameElement>(null)
   const {displayed} = sanityDocument
@@ -77,6 +81,16 @@ function Iframe(props: IframeProps) {
     // Funky way to reload an iframe without CORS issuies
     // eslint-disable-next-line no-self-assign
     iframe.current.src = iframe.current.src
+
+    setLoading(true)
+  }
+
+  function handleIframeLoad() {
+    setLoading(false)
+    // Run onLoad from attributes
+    if (attributes.onLoad && typeof attributes.onLoad === 'function') {
+      attributes.onLoad()
+    }
   }
 
   // Reload on new revisions
@@ -91,6 +105,7 @@ function Iframe(props: IframeProps) {
   // Set initial URL and refresh on new revisions
   useEffect(() => {
     const getUrl = async () => {
+      setLoading(true)
       const resolveUrl = typeof url === 'function' ? await url(displayed) : ``
 
       // Only update state if URL has changed
@@ -173,7 +188,23 @@ function Iframe(props: IframeProps) {
           </Flex>
         </Card>
         <Card tone="transparent" padding={iframeSize === 'mobile' ? 2 : 0} style={{height: `100%`}}>
-          <Flex align="center" justify="center" style={{height: `100%`}}>
+          <Flex align="center" justify="center" style={{height: `100%`, position: `relative`}}>
+            {loader && loading && (
+              <Flex justify="center" align="center" style={{inset: `0`, position: `absolute`}}>
+                <Flex
+                  style={{...sizes[iframeSize], backgroundColor: `rgba(0,0,0,0.2)`}}
+                  justify="center"
+                  align="center"
+                >
+                  <Card padding={4} radius={2} shadow={1}>
+                    <Flex align="center" direction="column" gap={3} height="fill" justify="center">
+                      <Spinner />
+                      {loader && typeof loader === 'string' && <Text size={1}>{loader}</Text>}
+                    </Flex>
+                  </Card>
+                </Flex>
+              </Flex>
+            )}
             <iframe
               ref={iframe}
               title="preview"
@@ -181,6 +212,7 @@ function Iframe(props: IframeProps) {
               frameBorder="0"
               src={displayUrl}
               {...attributes}
+              onLoad={handleIframeLoad}
             />
           </Flex>
         </Card>
