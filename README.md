@@ -97,6 +97,9 @@ reload: {
   revision: true, // boolean | number. default `undefined`. If a number is provided, add a delay (in ms) before the automatic reload on document revision
 },
 
+// Optional: Display a spinner while the iframe is loading
+loader: true // boolean | string. default `undefined`. If a string is provided, it will be display below the spinner (e.g. Loading…)
+
 // Optional: Pass attributes to the underlying `iframe` element:
 // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe
 attributes: {
