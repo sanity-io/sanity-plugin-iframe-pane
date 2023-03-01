@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.0](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.1.1...v2.2.0) (2023-03-01)
+
+### Features
+
+- add loading spinner option ([#20](https://github.com/sanity-io/sanity-plugin-iframe-pane/issues/20)) ([fe2fae9](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/fe2fae98f9fcef8cc1c04f12408c2a8ab039a1a8))
+
 ## [2.1.1](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.1.0...v2.1.1) (2022-11-25)
 
 ### Bug Fixes
