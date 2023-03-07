@@ -35,6 +35,7 @@ export type IframeOptions = {
   url: string | ((document: SanityDocumentLike) => unknown)
   defaultSize?: 'desktop' | 'mobile'
   loader?: boolean | string
+  showDisplayUrl?: boolean
   reload: {
     revision: boolean | number
     button: boolean
@@ -58,7 +59,14 @@ const DEFAULT_SIZE = `desktop`
 
 function Iframe(props: IframeProps) {
   const {document: sanityDocument, options} = props
-  const {url, defaultSize = DEFAULT_SIZE, reload, loader, attributes = {}} = options
+  const {
+    url,
+    defaultSize = DEFAULT_SIZE,
+    reload,
+    loader,
+    attributes = {},
+    showDisplayUrl = true,
+  } = options
   const [displayUrl, setDisplayUrl] = useState(url && typeof url === 'string' ? url : ``)
   const [iframeSize, setIframeSize] = useState(sizes?.[defaultSize] ? defaultSize : DEFAULT_SIZE)
   const [loading, setLoading] = useState(false)
@@ -153,9 +161,11 @@ function Iframe(props: IframeProps) {
               />
             </Flex>
             <Box flex={1}>
-              <Text size={0} textOverflow="ellipsis">
-                {displayUrl}
-              </Text>
+              {showDisplayUrl && (
+                <Text size={0} textOverflow="ellipsis">
+                  {displayUrl}
+                </Text>
+              )}
             </Box>
             <Flex align="center" gap={1}>
               {reload?.button ? (

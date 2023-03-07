@@ -88,6 +88,9 @@ url: (doc) => resolveProductionUrl(doc),
 // OR a string
 url: `https://sanity.io`,
 
+// Optional: Display the Url in the pane
+showDisplayUrl: true // boolean. default `true`.
+
 // Optional: Set the default size
 defaultSize: `mobile`, // default `desktop`
 
