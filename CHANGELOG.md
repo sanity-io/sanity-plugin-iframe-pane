@@ -5,6 +5,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.0](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.2.0...v2.3.0) (2023-03-22)
+
+### Features
+
+- add option to hide iframe url ([#25](https://github.com/sanity-io/sanity-plugin-iframe-pane/issues/25)) ([8989db5](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/8989db54f621f036faa3890c6a236cbe6778ff5d))
+
+### Bug Fixes
+
+- **deps:** update dependencies (non-major) ([#26](https://github.com/sanity-io/sanity-plugin-iframe-pane/issues/26)) ([f2d82ed](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/f2d82ed4e202fa84cd8f84230a89f003570a9f00))
+
 ## [2.2.0](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.1.1...v2.2.0) (2023-03-01)
 
 ### Features
