@@ -1,10 +1,9 @@
 /* eslint-disable react/jsx-no-bind */
-import React, {useEffect, useState, useRef} from 'react'
-import {SanityDocumentLike} from 'sanity'
-import {Box, Flex, Text, Button, ThemeProvider, Card, Spinner} from '@sanity/ui'
-import {UndoIcon, CopyIcon, LeaveIcon, MobileDeviceIcon} from '@sanity/icons'
+import {CopyIcon, LeaveIcon, MobileDeviceIcon, UndoIcon} from '@sanity/icons'
+import {Box, Button, Card, Flex, Spinner, Text, ThemeProvider} from '@sanity/ui'
+import React, {useEffect, useRef, useState} from 'react'
 import {HTMLAttributeReferrerPolicy} from 'react'
-
+import {SanityDocumentLike} from 'sanity'
 import {useCopyToClipboard} from 'usehooks-ts'
 
 type Size = 'desktop' | 'mobile'

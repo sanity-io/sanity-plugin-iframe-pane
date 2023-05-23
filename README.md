@@ -23,7 +23,7 @@ yarn add sanity-plugin-iframe-pane
 
 ## Usage
 
-This is designed to be used as a [Component inside of a View](https://www.sanity.io/docs/structure-builder-reference#c0c8284844b7). 
+This is designed to be used as a [Component inside of a View](https://www.sanity.io/docs/structure-builder-reference#c0c8284844b7).
 
 The simplest way to configure views is by customizing the `defaultDocumentNode` setting in the `deskTool()` plugin.
 
@@ -45,7 +45,6 @@ export default defineConfig({
 A basic example of a custom `defaultDocumentNode` function, to only show the Iframe Pane on `movie` type documents.
 
 ```ts
-
 // ./src/defaultDocumentNode.ts
 
 import {DefaultDocumentNodeResolver} from 'sanity/desk'
