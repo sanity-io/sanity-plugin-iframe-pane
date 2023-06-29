@@ -109,7 +109,19 @@ function Iframe(props: IframeProps) {
     }
   }, [displayed._rev, reload?.revision])
 
-  // Set initial URL and refresh on new revisions
+  // Reload on change of URL
+  useEffect(() => {
+    if (typeof url === 'string') setDisplayUrl(url)
+  }, [url])
+
+  useEffect(handleReload, [displayUrl])
+
+  // Apply changes of default sizes
+  useEffect(() => {
+    if (sizes?.[defaultSize]) setIframeSize(defaultSize)
+  }, [defaultSize])
+
+  // Set initial URL and refresh on new revisions or change of URL
   useEffect(() => {
     const getUrl = async () => {
       setLoading(true)
@@ -125,7 +137,7 @@ function Iframe(props: IframeProps) {
       getUrl()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [displayed._rev])
+  }, [displayed._rev, url])
 
   if (!displayUrl || typeof displayUrl !== 'string') {
     return (
