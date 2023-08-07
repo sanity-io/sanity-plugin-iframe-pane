@@ -85,7 +85,7 @@ function Iframe(props: IframeProps) {
       return
     }
 
-    // Funky way to reload an iframe without CORS issuies
+    // Funky way to reload an iframe without CORS issues
     // eslint-disable-next-line no-self-assign
     iframe.current.src = iframe.current.src
 
