@@ -51,6 +51,16 @@
   "module": "./lib/index.js",
   "source": "./src/index.ts",
   "types": "./lib/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "is-valid-secret": [
+        "./lib/is-valid-secret.d.ts"
+      ],
+      "preview-url": [
+        "./lib/preview-url.d.ts"
+      ]
+    }
+  },
   "files": [
     "src",
     "lib",
