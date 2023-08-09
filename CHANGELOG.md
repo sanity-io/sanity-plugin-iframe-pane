@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.4](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.5.3...v2.5.4) (2023-08-09)
+
+### Bug Fixes
+
+- only throw on missing secret id in development ([35831eb](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/35831eb43d135eb212d285b1a045c3d8037f886f))
+
 ## [2.5.3](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.5.2...v2.5.3) (2023-08-09)
 
 ### Bug Fixes
