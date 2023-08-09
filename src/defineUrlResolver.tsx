@@ -2,6 +2,8 @@ import type {SanityDocument} from 'sanity'
 
 import {MissingSlug, UrlState} from './types'
 
+export type {UrlState}
+
 export type UrlResolver = (
   document: SanityDocument,
   urlSecret: string | null | undefined,

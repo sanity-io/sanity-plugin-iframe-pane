@@ -12,7 +12,7 @@ import {UrlSecretId} from './isValidSecret'
 import {DEFAULT_SIZE, sizes, Toolbar} from './Toolbar'
 import {IframeSizeKey, MissingSlug, SetError, type UrlState} from './types'
 
-export type {UrlResolver, UrlSecretId}
+export type {IframeSizeKey, UrlResolver, UrlSecretId}
 
 export type IframeOptions = {
   urlSecretId?: UrlSecretId

@@ -1,5 +1,15 @@
-export type * from './defineUrlResolver'
-export {defineUrlResolver} from './defineUrlResolver'
-export type * from './Iframe'
-export {Iframe as default, Iframe} from './Iframe'
-export type * from './types'
+export {
+  defineUrlResolver,
+  type DefineUrlResolverOptions,
+  type UrlResolver,
+  type UrlState,
+} from './defineUrlResolver'
+export {
+  Iframe as default,
+  Iframe,
+  type IframeOptions,
+  type IframeProps,
+  type IframeSizeKey,
+  type UrlSecretId,
+} from './Iframe'
+export type {Size, SizeProps} from './types'

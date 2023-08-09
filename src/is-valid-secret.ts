@@ -1,2 +1,1 @@
-export type * from './isValidSecret'
-export {isValidSecret} from './isValidSecret'
+export {isValidSecret, type SanityClientLike, type UrlSecretId} from './isValidSecret'
