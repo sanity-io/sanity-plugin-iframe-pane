@@ -29,6 +29,9 @@ export type SanityClientLike = {
     options: {tag?: string},
   ): Promise<R>
 }
+
+const isDev = process.env.NODE_ENV === 'development'
+
 export async function isValidSecret(
   client: SanityClientLike,
   urlSecretId: UrlSecretId,
@@ -62,11 +65,19 @@ export async function isValidSecret(
     {id: urlSecretId},
     {tag},
   )
-  if (!data?.secret) {
-    throw new TypeError(
-      `Unable to find a secret in the dataset, with the id \`${urlSecretId}\`. Have you set the \`urlSecretId\` option in your \`Iframe\` and \`previewUrl\` configurations?`,
+  // eslint-disable-next-line no-process-env
+  if (!data?.secret && isDev) {
+    const exists = await client.fetch<null | Record<string, any>>(
+      /* groq */ `*[_id == $id][0]`,
+      {id: urlSecretId},
+      {tag},
     )
+    if (!exists) {
+      throw new TypeError(
+        `Unable to find a secret in the dataset, with the id \`${urlSecretId}\`. Have you set the \`urlSecretId\` option in your \`Iframe\` and \`previewUrl\` configurations?`,
+      )
+    }
   }
 
-  return data.secret === urlSecret
+  return data?.secret === urlSecret
 }

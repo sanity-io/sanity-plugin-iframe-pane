@@ -28,11 +28,8 @@
     "./is-valid-secret": {
       "types": "./lib/is-valid-secret.d.ts",
       "source": "./src/is-valid-secret.ts",
-      "require": "./lib/is-valid-secret.cjs",
-      "node": {
-        "import": "./lib/is-valid-secret.cjs.js"
-      },
       "import": "./lib/is-valid-secret.js",
+      "require": "./lib/is-valid-secret.cjs",
       "default": "./lib/is-valid-secret.js"
     },
     "./preview-url": {
