@@ -62,6 +62,11 @@ export async function isValidSecret(
     {id: urlSecretId},
     {tag},
   )
+  if (!data?.secret) {
+    throw new TypeError(
+      `Unable to find a secret in the dataset, with the id \`${urlSecretId}\`. Have you set the \`urlSecretId\` option in your \`Iframe\` and \`previewUrl\` configurations?`,
+    )
+  }
 
-  return data?.secret === urlSecret
+  return data.secret === urlSecret
 }
