@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.0](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.4.0...v2.5.0) (2023-08-09)
+
+### Features
+
+- add `defineUrlResolver` ([047abdf](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/047abdfd64e5312d7ae7edaaf67b9a9ee11aa166))
+- add `isValidSecret` utility ([7357657](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/7357657402765973faf343174c5ce58a31927ed9))
+
 ## [2.4.0](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.3.1...v2.4.0) (2023-08-09)
 
 ### Features
