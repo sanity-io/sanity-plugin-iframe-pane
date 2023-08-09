@@ -5,6 +5,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.0](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.3.1...v2.4.0) (2023-08-09)
+
+### Features
+
+- add url secret generation & improve design UX ([bcea5a1](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/bcea5a1e5d3523ea8dcbe26df447c88eb785959d))
+
+### Bug Fixes
+
+- add `node.module` export condition ([8e06900](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/8e06900ba31254e1c4947d7ddfed3ee7c52668a4))
+
 ## [2.3.1](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.3.0...v2.3.1) (2023-05-23)
 
 ### Bug Fixes
