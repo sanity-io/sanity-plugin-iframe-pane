@@ -48,7 +48,7 @@ A basic example of a custom `defaultDocumentNode` function, to only show the Ifr
 // ./src/defaultDocumentNode.ts
 
 import {DefaultDocumentNodeResolver} from 'sanity/desk'
-import Iframe from 'sanity-plugin-iframe-pane'
+import {Iframe} from 'sanity-plugin-iframe-pane'
 import {SanityDocument} from 'sanity'
 
 // Customise this function to show the correct URL based on the current document
@@ -96,11 +96,11 @@ defaultSize: `mobile`, // default `desktop`
 // Optional: Add a reload button, or reload on new document revisions
 reload: {
   button: true, // default `undefined`
-  revision: true, // boolean | number. default `undefined`. If a number is provided, add a delay (in ms) before the automatic reload on document revision
+  revision: true, // boolean | number. default `undefined`. If a number is provided, add a delay (in ms) before the automatic reload on document revision. If `true` then a curated delay is used. Use `0` to have zero delay.`
 },
 
 // Optional: Display a spinner while the iframe is loading
-loader: true // boolean | string. default `undefined`. If a string is provided, it will be display below the spinner (e.g. Loading…)
+loader: true // boolean | string. default `'Loading…'`. If a string is provided, it will be display below the spinner (e.g. Loading…)
 
 // Optional: Pass attributes to the underlying `iframe` element:
 // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe

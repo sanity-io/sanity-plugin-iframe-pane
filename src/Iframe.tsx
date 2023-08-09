@@ -1,43 +1,28 @@
 /* eslint-disable react/jsx-no-bind */
-import {CopyIcon, LeaveIcon, MobileDeviceIcon, UndoIcon} from '@sanity/icons'
-import {Box, Button, Card, Flex, Spinner, Text, ThemeProvider} from '@sanity/ui'
-import React, {useEffect, useRef, useState} from 'react'
+import {WarningOutlineIcon} from '@sanity/icons'
+import {Box, Card, Container, Flex, Spinner, Stack, Text, usePrefersReducedMotion} from '@sanity/ui'
+import {AnimatePresence, motion, MotionConfig} from 'framer-motion'
+import React, {forwardRef, useCallback, useDeferredValue, useEffect, useRef, useState} from 'react'
 import {HTMLAttributeReferrerPolicy} from 'react'
-import {SanityDocumentLike} from 'sanity'
-import {useCopyToClipboard} from 'usehooks-ts'
+import {SanityDocument} from 'sanity'
 
-type Size = 'desktop' | 'mobile'
+import {UrlResolver} from './defineUrlResolver'
+import {GetUrlSecret} from './GetUrlSecret'
+import {UrlSecretId} from './isValidSecret'
+import {DEFAULT_SIZE, sizes, Toolbar} from './Toolbar'
+import {IframeSizeKey, MissingSlug, SetError, type UrlState} from './types'
 
-type SizeProps = {
-  // eslint-disable-next-line no-unused-vars
-  [key in Size]: {
-    width: string | number
-    height: string | number
-    maxHeight: string | number
-  }
-}
-
-const sizes: SizeProps = {
-  desktop: {
-    width: `100%`,
-    height: `100%`,
-    maxHeight: `100%`,
-  },
-  mobile: {
-    width: 414,
-    height: `100%`,
-    maxHeight: 736,
-  },
-}
+export type {UrlResolver, UrlSecretId}
 
 export type IframeOptions = {
-  url: string | ((document: SanityDocumentLike) => unknown)
-  defaultSize?: 'desktop' | 'mobile'
-  loader?: boolean | string
+  urlSecretId?: UrlSecretId
+  url: UrlState | UrlResolver
+  defaultSize?: IframeSizeKey
+  loader?: string | boolean
   showDisplayUrl?: boolean
-  reload: {
-    revision: boolean | number
-    button: boolean
+  reload?: {
+    revision?: boolean | number
+    button?: boolean
   }
   attributes?: Partial<{
     allow: string
@@ -47,40 +32,50 @@ export type IframeOptions = {
   }>
 }
 
-export type IframeProps = {
+const MotionFlex = motion(Flex)
+
+export interface IframeProps {
   document: {
-    displayed: SanityDocumentLike
+    displayed: SanityDocument
   }
   options: IframeOptions
 }
 
-const DEFAULT_SIZE = `desktop`
+export function Iframe(props: IframeProps) {
+  const [error, setError] = useState<unknown>(null)
+  if (error) {
+    throw error
+  }
 
-function Iframe(props: IframeProps) {
   const {document: sanityDocument, options} = props
   const {
     url,
+    urlSecretId,
     defaultSize = DEFAULT_SIZE,
     reload,
-    loader,
+    loader = 'Loading…',
     attributes = {},
     showDisplayUrl = true,
   } = options
-  const [displayUrl, setDisplayUrl] = useState(url && typeof url === 'string' ? url : ``)
   const [iframeSize, setIframeSize] = useState(sizes?.[defaultSize] ? defaultSize : DEFAULT_SIZE)
-  const [loading, setLoading] = useState(false)
-  const input = useRef<HTMLTextAreaElement>(null)
+
+  // Workaround documents that initially appears to be an empty new document but just hasen't loaded yet
+  const [workaroundEmptyDocument, setWorkaroundEmptyDocument] = useState(true)
+  useEffect(() => {
+    const timeout = setTimeout(() => setWorkaroundEmptyDocument(false), 1000)
+    return () => clearTimeout(timeout)
+  }, [])
+
+  const prefersReducedMotion = usePrefersReducedMotion()
+  const [urlState, setUrlState] = useState<UrlState>(() => (typeof url === 'function' ? '' : url))
+
+  const [loading, setLoading] = useState(true)
+  const [reloading, setReloading] = useState(false)
+
   const iframe = useRef<HTMLIFrameElement>(null)
   const {displayed} = sanityDocument
-  const [, copy] = useCopyToClipboard()
 
-  function handleCopy() {
-    if (!input?.current?.value) return
-
-    copy(input.current.value)
-  }
-
-  function handleReload() {
+  const handleReload = useCallback(() => {
     if (!iframe?.current) {
       return
     }
@@ -89,148 +84,264 @@ function Iframe(props: IframeProps) {
     // eslint-disable-next-line no-self-assign
     iframe.current.src = iframe.current.src
 
-    setLoading(true)
-  }
+    setReloading(true)
+  }, [])
+
+  const deferredRevision = useDeferredValue(displayed._rev)
+  const displayUrl = typeof urlState === 'string' ? urlState : ''
+
+  return (
+    <MotionConfig transition={prefersReducedMotion ? {duration: 0} : undefined}>
+      <Flex direction="column" style={{height: `100%`}}>
+        <Toolbar
+          displayUrl={displayUrl}
+          iframeSize={iframeSize}
+          reloading={reloading}
+          setIframeSize={setIframeSize}
+          showDisplayUrl={showDisplayUrl}
+          reloadButton={!!reload?.button}
+          handleReload={handleReload}
+        />
+        {urlState === MissingSlug && !workaroundEmptyDocument ? (
+          <MissingSlugScreen />
+        ) : (
+          <Card tone="transparent" style={{height: `100%`}}>
+            <Frame
+              ref={iframe}
+              loader={loader}
+              loading={loading}
+              reloading={reloading}
+              iframeSize={iframeSize}
+              setReloading={setReloading}
+              setLoading={setLoading}
+              displayUrl={displayUrl}
+              attributes={attributes}
+            />
+          </Card>
+        )}
+        {typeof url === 'function' && (
+          <AsyncUrl
+            // We use the revision as a key, to force a re-render when the revision changes
+            // This allows us to respond to changed props (maybe the url function itself changes)
+            // But avoid calling async logic on every render accidentally
+            key={deferredRevision}
+            url={url}
+            displayed={displayed}
+            urlSecretId={urlSecretId}
+            setDisplayUrl={setUrlState}
+            setError={setError}
+          />
+        )}
+        {displayUrl && (reload?.revision || reload?.revision === 0) && (
+          <ReloadOnRevision
+            revision={reload.revision}
+            _rev={deferredRevision}
+            handleReload={handleReload}
+          />
+        )}
+      </Flex>
+    </MotionConfig>
+  )
+}
+
+interface FrameProps extends Required<Pick<IframeOptions, 'loader' | 'attributes'>> {
+  loader: string | boolean
+  loading: boolean
+  reloading: boolean
+  setLoading: (loading: boolean) => void
+  setReloading: (reloading: boolean) => void
+  iframeSize: IframeSizeKey
+  displayUrl: string
+}
+const Frame = forwardRef(function Frame(
+  props: FrameProps,
+  iframe: React.ForwardedRef<HTMLIFrameElement>,
+) {
+  const {loader, loading, setLoading, iframeSize, attributes, reloading, displayUrl, setReloading} =
+    props
 
   function handleIframeLoad() {
     setLoading(false)
+    setReloading(false)
     // Run onLoad from attributes
     if (attributes.onLoad && typeof attributes.onLoad === 'function') {
       attributes.onLoad()
     }
   }
 
+  return (
+    <Flex align="center" justify="center" style={{height: `100%`, position: `relative`}}>
+      <AnimatePresence>
+        {loader && loading && (
+          <MotionFlex
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={spinnerVariants}
+            justify="center"
+            align="center"
+            style={{inset: `0`, position: `absolute`}}
+          >
+            <Flex
+              style={{...sizes[iframeSize]}}
+              justify="center"
+              align="center"
+              direction="column"
+              gap={4}
+            >
+              <Spinner muted />
+              {loader && typeof loader === 'string' && (
+                <Text muted size={1}>
+                  {loader}
+                </Text>
+              )}
+            </Flex>
+          </MotionFlex>
+        )}
+      </AnimatePresence>
+      <motion.iframe
+        ref={iframe}
+        title="preview"
+        frameBorder="0"
+        style={{maxHeight: '100%'}}
+        src={displayUrl}
+        initial={['background', iframeSize]}
+        variants={iframeVariants}
+        animate={[
+          loader && loading ? 'background' : 'active',
+          reloading ? 'reloading' : 'idle',
+          iframeSize,
+        ]}
+        {...attributes}
+        onLoad={handleIframeLoad}
+      />
+    </Flex>
+  )
+})
+
+const spinnerVariants = {
+  initial: {opacity: 1},
+  animate: {opacity: [0, 0, 1]},
+  exit: {opacity: [1, 0, 0]},
+}
+
+const iframeVariants = {
+  ...sizes,
+  desktop: {
+    ...sizes.desktop,
+    boxShadow: '0 0 0 0px var(--card-shadow-outline-color)',
+  },
+  mobile: {
+    ...sizes.mobile,
+    boxShadow: '0 0 0 1px var(--card-shadow-outline-color)',
+  },
+  background: {
+    opacity: 0,
+    scale: 1,
+  },
+  idle: {
+    scale: 1,
+  },
+  reloading: {
+    scale: [1, 1, 1, 0.98],
+  },
+  active: {
+    opacity: [0, 0, 1],
+    scale: 1,
+  },
+}
+
+interface ReloadOnRevisionProps {
+  _rev?: string
+  revision: number | boolean
+  handleReload: () => void
+}
+function ReloadOnRevision(props: ReloadOnRevisionProps) {
+  const {revision, handleReload, _rev} = props
+  const [initialRev] = useState(_rev)
   // Reload on new revisions
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
-    if (reload?.revision || reload?.revision == 0) {
-      setTimeout(
-        () => {
-          handleReload()
-        },
-        Number(reload?.revision),
-      )
+    if (_rev !== initialRev) {
+      const timeout = setTimeout(handleReload, Number(revision === true ? 300 : revision))
+      return () => clearTimeout(timeout)
     }
-  }, [displayed._rev, reload?.revision])
+  }, [_rev, revision, handleReload, initialRev])
+
+  return null
+}
+
+interface AsyncUrlProps {
+  displayed: SanityDocument
+  url: UrlResolver
+  urlSecretId?: UrlSecretId
+  setDisplayUrl: (url: UrlState) => void
+  setError: SetError
+}
+function AsyncUrl(props: AsyncUrlProps) {
+  const {urlSecretId, setDisplayUrl, setError} = props
+  // Snapshot values we only care about when the revision changes, done by changing the `key` prop
+  const [displayed] = useState(props.displayed)
+  const [url] = useState(() => props.url)
+  const [urlSecret, setUrlSecret] = useState<null | string>(null)
 
   // Set initial URL and refresh on new revisions
   useEffect(() => {
-    const getUrl = async () => {
-      setLoading(true)
-      const resolveUrl = typeof url === 'function' ? await url(displayed) : ``
+    if (urlSecretId && !urlSecret) return
+
+    const getUrl = async (signal: AbortSignal) => {
+      const resolveUrl = await url(displayed, urlSecret, abort.signal)
 
       // Only update state if URL has changed
-      if (resolveUrl !== displayUrl && resolveUrl && typeof resolveUrl === 'string') {
+      if (!signal.aborted && resolveUrl) {
         setDisplayUrl(resolveUrl)
       }
     }
 
-    if (typeof url === 'function') {
-      getUrl()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [displayed._rev])
+    const abort = new AbortController()
+    getUrl(abort.signal).catch((error) => error.name !== 'AbortError' && setError(error))
+    // eslint-disable-next-line consistent-return
+    return () => abort.abort()
+  }, [displayed, setDisplayUrl, setError, url, urlSecret, urlSecretId])
 
-  if (!displayUrl || typeof displayUrl !== 'string') {
+  if (urlSecretId) {
     return (
-      <ThemeProvider>
-        <Flex padding={5} align="center" justify="center">
-          <Spinner />
-        </Flex>
-      </ThemeProvider>
+      <GetUrlSecret
+        urlSecretId={urlSecretId}
+        urlSecret={urlSecret}
+        setUrlSecret={setUrlSecret}
+        setError={setError}
+      />
     )
   }
 
-  return (
-    <ThemeProvider>
-      <textarea
-        style={{position: `absolute`, pointerEvents: `none`, opacity: 0}}
-        ref={input}
-        value={displayUrl}
-        readOnly
-        tabIndex={-1}
-      />
-      <Flex direction="column" style={{height: `100%`}}>
-        <Card padding={2} borderBottom>
-          <Flex align="center" gap={2}>
-            <Flex align="center" gap={1}>
-              <Button
-                fontSize={[1]}
-                padding={2}
-                tone="primary"
-                mode={iframeSize === 'mobile' ? 'default' : 'ghost'}
-                icon={MobileDeviceIcon}
-                onClick={() => setIframeSize(iframeSize === 'mobile' ? 'desktop' : 'mobile')}
-              />
-            </Flex>
-            <Box flex={1}>
-              {showDisplayUrl && (
-                <Text size={0} textOverflow="ellipsis">
-                  {displayUrl}
-                </Text>
-              )}
-            </Box>
-            <Flex align="center" gap={1}>
-              {reload?.button ? (
-                <Button
-                  fontSize={[1]}
-                  padding={2}
-                  icon={UndoIcon}
-                  title="Reload"
-                  aria-label="Reload"
-                  onClick={() => handleReload()}
-                />
-              ) : null}
-              <Button
-                fontSize={[1]}
-                icon={CopyIcon}
-                padding={[2]}
-                title="Copy"
-                aria-label="Copy"
-                onClick={() => handleCopy()}
-              />
-              <Button
-                fontSize={[1]}
-                icon={LeaveIcon}
-                padding={[2]}
-                text="Open"
-                tone="primary"
-                onClick={() => window.open(displayUrl)}
-              />
-            </Flex>
-          </Flex>
-        </Card>
-        <Card tone="transparent" padding={iframeSize === 'mobile' ? 2 : 0} style={{height: `100%`}}>
-          <Flex align="center" justify="center" style={{height: `100%`, position: `relative`}}>
-            {loader && loading && (
-              <Flex justify="center" align="center" style={{inset: `0`, position: `absolute`}}>
-                <Flex
-                  style={{...sizes[iframeSize], backgroundColor: `rgba(0,0,0,0.2)`}}
-                  justify="center"
-                  align="center"
-                >
-                  <Card padding={4} radius={2} shadow={1}>
-                    <Flex align="center" direction="column" gap={3} height="fill" justify="center">
-                      <Spinner />
-                      {loader && typeof loader === 'string' && <Text size={1}>{loader}</Text>}
-                    </Flex>
-                  </Card>
-                </Flex>
-              </Flex>
-            )}
-            <iframe
-              ref={iframe}
-              title="preview"
-              style={sizes[iframeSize]}
-              frameBorder="0"
-              src={displayUrl}
-              {...attributes}
-              onLoad={handleIframeLoad}
-            />
-          </Flex>
-        </Card>
-      </Flex>
-    </ThemeProvider>
-  )
+  return null
 }
 
-export default Iframe
+export function MissingSlugScreen() {
+  return (
+    <Card height="fill">
+      <Flex align="center" height="fill" justify="center" padding={4} sizing="border">
+        <Container width={0}>
+          <Card padding={4} radius={2} shadow={1} tone="caution">
+            <Flex>
+              <Box>
+                <Text size={1}>
+                  <WarningOutlineIcon />
+                </Text>
+              </Box>
+              <Stack flex={1} marginLeft={3} space={3}>
+                <Text as="h1" size={1} weight="bold">
+                  Missing slug
+                </Text>
+                <Text as="p" muted size={1}>
+                  Add a slug to see the preview.
+                </Text>
+              </Stack>
+            </Flex>
+          </Card>
+        </Container>
+      </Flex>
+    </Card>
+  )
+}
