@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.1](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.5.0...v2.5.1) (2023-08-09)
+
+### Bug Fixes
+
+- **typings:** add `typesVersions` field ([b42a5ce](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/b42a5ceab173224f0953db84342efd5ba542ae48))
+
 ## [2.5.0](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.4.0...v2.5.0) (2023-08-09)
 
 ### Features
