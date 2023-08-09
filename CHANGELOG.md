@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.3](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.5.2...v2.5.3) (2023-08-09)
+
+### Bug Fixes
+
+- throw if no Secret in the dataset while validating ([8effd66](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/8effd66002862a31c0199366904b5d4cd5903ff9))
+
 ## [2.5.2](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.5.1...v2.5.2) (2023-08-09)
 
 ### Bug Fixes
