@@ -35,6 +35,16 @@
       "import": "./lib/is-valid-secret.js",
       "default": "./lib/is-valid-secret.js"
     },
+    "./preview-url": {
+      "types": "./lib/preview-url.d.ts",
+      "source": "./src/preview-url.ts",
+      "require": "./lib/preview-url.cjs",
+      "node": {
+        "import": "./lib/preview-url.cjs.js"
+      },
+      "import": "./lib/preview-url.js",
+      "default": "./lib/preview-url.js"
+    },
     "./package.json": "./package.json"
   },
   "main": "./lib/index.cjs",
