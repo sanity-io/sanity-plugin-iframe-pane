@@ -63,6 +63,7 @@ export async function isValidSecret(
   const data = await customClient.fetch<FetchSecretResponse>(
     fetchSecretQuery,
     {id: urlSecretId},
+    // @ts-expect-error -- the `cache` option is valid, but not in the types when NextJS typings aren't installed
     {cache: 'no-store', tag},
   )
   // eslint-disable-next-line no-process-env
@@ -70,7 +71,8 @@ export async function isValidSecret(
     const exists = await client.fetch<null | Record<string, any>>(
       /* groq */ `*[_id == $id][0]`,
       {id: urlSecretId},
-      {tag},
+      // @ts-expect-error -- the `cache` option is valid, but not in the types when NextJS typings aren't installed
+      {cache: 'no-store', tag},
     )
     if (!exists) {
       throw new TypeError(
