@@ -63,7 +63,7 @@ export async function isValidSecret(
   const data = await customClient.fetch<FetchSecretResponse>(
     fetchSecretQuery,
     {id: urlSecretId},
-    {tag},
+    {cache: 'no-store', tag},
   )
   // eslint-disable-next-line no-process-env
   if (!data?.secret && isDev) {
