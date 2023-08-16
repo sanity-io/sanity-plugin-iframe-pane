@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.5](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.5.4...v2.5.5) (2023-08-16)
+
+### Bug Fixes
+
+- **app-router:** skip cache when validating the secret ([8af7a95](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/8af7a9529ea57484909114c84998a24a5740c9a7))
+
 ## [2.5.4](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.5.3...v2.5.4) (2023-08-09)
 
 ### Bug Fixes
