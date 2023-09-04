@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.7](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.5.6...v2.5.7) (2023-09-04)
+
+### Bug Fixes
+
+- improve tooltip placement ([0b66d1b](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/0b66d1b39d3f78734c450d376f2399625daa5aa2))
+
 ## [2.5.6](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.5.5...v2.5.6) (2023-09-04)
 
 ### Bug Fixes
