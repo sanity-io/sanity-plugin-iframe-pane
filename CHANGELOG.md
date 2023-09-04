@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.6](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.5.5...v2.5.6) (2023-09-04)
+
+### Bug Fixes
+
+- **edge:** handle race condition ([62aa705](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/62aa705bc6f5f7dff2e121575b3e34de02c98207))
+- ensure CSM isn't returned ([4f3319c](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/4f3319cddb7906dc1116e8248b988b3188c25f60))
+
 ## [2.5.5](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.5.4...v2.5.5) (2023-08-16)
 
 ### Bug Fixes
