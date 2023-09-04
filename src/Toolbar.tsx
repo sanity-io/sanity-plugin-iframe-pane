@@ -63,6 +63,7 @@ export function Toolbar(props: ToolbarProps) {
                 </Text>
               }
               padding={2}
+              placement="bottom-start"
             >
               <Button
                 disabled={!displayUrl}
@@ -133,6 +134,7 @@ export function Toolbar(props: ToolbarProps) {
                 </Text>
               }
               padding={2}
+              placement="bottom-end"
             >
               <Button
                 disabled={!displayUrl}
