@@ -17,7 +17,12 @@ export const apiVersion = '2023-08-08'
 
 export type SanityClientLike = {
   config(): {token?: string}
-  withConfig(config: {apiVersion?: string; useCdn?: boolean; perspective: 'raw'}): SanityClientLike
+  withConfig(config: {
+    apiVersion?: string
+    useCdn?: boolean
+    perspective: 'raw'
+    resultSourceMap: boolean
+  }): SanityClientLike
   fetch<
     R,
     Q = {
@@ -66,6 +71,7 @@ export async function isValidSecret(
     apiVersion,
     useCdn: false,
     perspective: 'raw',
+    resultSourceMap: false,
   })
   const data = await customClient.fetch<FetchSecretResponse>(
     fetchSecretQuery,
