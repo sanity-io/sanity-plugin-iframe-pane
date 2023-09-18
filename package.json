@@ -86,12 +86,12 @@
   "devDependencies": {
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
-    "@sanity/pkg-utils": "^2.4.8",
+    "@sanity/pkg-utils": "^2.4.9",
     "@sanity/plugin-kit": "^3.1.10",
     "@sanity/semantic-release-preset": "^4.1.4",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
-    "eslint": "^8.48.0",
+    "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-config-sanity": "^6.0.0",
@@ -109,7 +109,7 @@
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
     "rimraf": "^5.0.1",
-    "sanity": "^3.16.2",
+    "sanity": "^3.16.7",
     "styled-components": "^5.3.11",
     "typescript": "^5.2.2"
   },
