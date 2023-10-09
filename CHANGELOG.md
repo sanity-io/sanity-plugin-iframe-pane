@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.8](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.5.7...v2.5.8) (2023-10-09)
+
+### Bug Fixes
+
+- change paste icon to copy ([#74](https://github.com/sanity-io/sanity-plugin-iframe-pane/issues/74)) ([0a21338](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/0a2133807de4d4069b4bedf6d9211949931cdda0))
+- update minimum version of @sanity/ui ([#75](https://github.com/sanity-io/sanity-plugin-iframe-pane/issues/75)) ([12fc076](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/12fc0765edc2a21cc10ca4973676728a2da7bcc9))
+
 ## [2.5.7](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.5.6...v2.5.7) (2023-09-04)
 
 ### Bug Fixes
