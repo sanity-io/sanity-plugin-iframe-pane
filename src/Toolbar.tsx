@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-bind */
-import {ClipboardIcon, LaunchIcon, MobileDeviceIcon, UndoIcon} from '@sanity/icons'
+import {CopyIcon, LaunchIcon, MobileDeviceIcon, UndoIcon} from '@sanity/icons'
 import {Box, Button, Card, Flex, Text, Tooltip, useToast} from '@sanity/ui'
 import React, {useRef} from 'react'
 import {useCopyToClipboard} from 'usehooks-ts'
@@ -112,7 +112,7 @@ export function Toolbar(props: ToolbarProps) {
                 mode="bleed"
                 disabled={!displayUrl}
                 fontSize={[1]}
-                icon={ClipboardIcon}
+                icon={CopyIcon}
                 padding={[2]}
                 aria-label="Copy URL"
                 onClick={() => {
