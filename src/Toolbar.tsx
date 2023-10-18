@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-bind */
-import {CopyIcon, LaunchIcon, MobileDeviceIcon, UndoIcon} from '@sanity/icons'
+import {CopyIcon, LaunchIcon, MobileDeviceIcon, RefreshIcon} from '@sanity/icons'
 import {Box, Button, Card, Flex, Text, Tooltip, useToast} from '@sanity/ui'
 import React, {useRef} from 'react'
 import {useCopyToClipboard} from 'usehooks-ts'
@@ -93,7 +93,7 @@ export function Toolbar(props: ToolbarProps) {
                   mode="bleed"
                   fontSize={[1]}
                   padding={2}
-                  icon={<UndoIcon style={{transform: 'rotate(90deg) scaleY(-1)'}} />}
+                  icon={RefreshIcon}
                   loading={reloading}
                   aria-label="Reload"
                   onClick={() => handleReload()}
