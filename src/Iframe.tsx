@@ -23,6 +23,7 @@ export type IframeOptions = {
   reload?: {
     revision?: boolean | number
     button?: boolean
+    postMessage?: boolean
   }
   attributes?: Partial<{
     allow: string
@@ -80,12 +81,17 @@ export function Iframe(props: IframeProps) {
       return
     }
 
+    if (reload?.postMessage) {
+      iframe.current.contentWindow?.postMessage({type: 'reload', sanity: true}, '*')
+      return
+    }
+
     // Funky way to reload an iframe without CORS issues
     // eslint-disable-next-line no-self-assign
     iframe.current.src = iframe.current.src
 
     setReloading(true)
-  }, [])
+  }, [reload?.postMessage])
 
   const deferredRevision = useDeferredValue(displayed._rev)
   const displayUrl = typeof urlState === 'string' ? urlState : ''
