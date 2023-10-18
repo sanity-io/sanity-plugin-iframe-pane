@@ -19,6 +19,7 @@ export function defineUrlResolver(options: DefineUrlResolverOptions): UrlResolve
   return (document, urlSecret) => {
     const url = new URL(base, location.origin)
     url.searchParams.set('type', document._type)
+    url.searchParams.set('id', document._id)
     const slug = (document?.slug as any)?.current
     if (slug) {
       url.searchParams.set('slug', slug)
