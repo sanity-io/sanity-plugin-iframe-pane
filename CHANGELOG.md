@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.0](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.5.8...v2.6.0) (2023-10-18)
+
+### Features
+
+- send `id` on url resolver ([d03546f](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/d03546f2615d71550a599b23da4ba6124666405d))
+- use the new `RefreshIcon` ([4fd266c](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/4fd266c8c553e3c963811865b2de2496da15f91d))
+
 ## [2.5.8](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.5.7...v2.5.8) (2023-10-09)
 
 ### Bug Fixes
