@@ -27,6 +27,10 @@ export type UrlResolver = (
 export type {IframeSizeKey}
 
 export interface IframeOptions {
+  /**
+   * If you have multiple iframe instances side-by-side you need to give each a unique key.
+   */
+  key?: string
   url:
     | string
     | UrlResolver
@@ -77,7 +81,7 @@ export function Iframe(props: IframeProps) {
     document: {published, draft = published},
     options,
   } = props
-  const {defaultSize = DEFAULT_SIZE, reload, attributes, showDisplayUrl = true} = options
+  const {defaultSize = DEFAULT_SIZE, reload, attributes, showDisplayUrl = true, key} = options
 
   const urlRef = useRef(options.url)
   const [draftSnapshot, setDraftSnapshot] = useState(() => draft)
@@ -163,6 +167,8 @@ export function Iframe(props: IframeProps) {
   return (
     <Suspense fallback={<Loading iframeSize="desktop" />}>
       <IframeInner
+        _key={key}
+        key={key}
         draftSnapshot={draftSnapshot}
         url={url}
         isResolvingUrl={isResolvingUrl}
@@ -182,6 +188,7 @@ export interface IframeInnerProps extends Omit<IframeOptions, 'url'> {
   draftSnapshot: SanityDocument | null
   userId?: string
   expiresAt?: number
+  _key?: string
 }
 const IframeInner = memo(function IframeInner(props: IframeInnerProps) {
   const {
@@ -193,6 +200,7 @@ const IframeInner = memo(function IframeInner(props: IframeInnerProps) {
     draftSnapshot,
     userId,
     expiresAt,
+    _key,
   } = props
   const [iframeSize, setIframeSize] = useState(sizes?.[defaultSize] ? defaultSize : DEFAULT_SIZE)
 
@@ -206,6 +214,7 @@ const IframeInner = memo(function IframeInner(props: IframeInnerProps) {
       draftSnapshot,
       userId,
       expiresAt,
+      _key,
       resolveUUID,
     ],
   )
