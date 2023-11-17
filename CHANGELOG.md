@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.0](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v3.0.0...v3.1.0) (2023-11-17)
+
+### Features
+
+- add `key` for allowing multiple instances in the same pane ([c7b0afb](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/c7b0afb35ac5d5ca12ae2c40f97508272055c977)), closes [#82](https://github.com/sanity-io/sanity-plugin-iframe-pane/issues/82)
+
 ## [3.0.0](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.6.1...v3.0.0) (2023-11-17)
 
 ### ⚠ BREAKING CHANGES
