@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v3.1.0...v3.1.1) (2023-11-17)
+
+### Bug Fixes
+
+- setting `key` no longer lags 1 render bind as you switch between multiple iframe panes on the same document ([973979f](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/973979f705ac6d84a09569a585e0d09c0801973e))
+
 ## [3.1.0](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v3.0.0...v3.1.0) (2023-11-17)
 
 ### Features
