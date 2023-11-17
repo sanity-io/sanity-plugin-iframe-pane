@@ -84,15 +84,15 @@ export function Iframe(props: IframeProps) {
   const {defaultSize = DEFAULT_SIZE, reload, attributes, showDisplayUrl = true, key} = options
 
   const urlRef = useRef(options.url)
-  const [draftSnapshot, setDraftSnapshot] = useState(() => draft)
+  const [draftSnapshot, setDraftSnapshot] = useState(() => ({key, draft}))
   useEffect(() => {
     urlRef.current = options.url
   }, [options.url])
   useEffect(() => {
-    if (JSON.stringify(draft) !== JSON.stringify(draftSnapshot)) {
-      startTransition(() => setDraftSnapshot(draft))
+    if (JSON.stringify({key, draft}) !== JSON.stringify(draftSnapshot)) {
+      startTransition(() => setDraftSnapshot({key, draft}))
     }
-  }, [draft, draftSnapshot])
+  }, [draft, draftSnapshot, key])
   const currentUser = useCurrentUser()
   const client = useClient({apiVersion: '2023-10-16'})
   const [expiresAt, setExpiresAt] = useState<number | undefined>()
@@ -167,9 +167,9 @@ export function Iframe(props: IframeProps) {
   return (
     <Suspense fallback={<Loading iframeSize="desktop" />}>
       <IframeInner
-        _key={key}
-        key={key}
-        draftSnapshot={draftSnapshot}
+        key={draftSnapshot.key}
+        _key={draftSnapshot.key}
+        draftSnapshot={draftSnapshot.draft}
         url={url}
         isResolvingUrl={isResolvingUrl}
         attributes={attributes}
