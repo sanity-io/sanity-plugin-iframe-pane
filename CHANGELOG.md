@@ -5,6 +5,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.6.1...v3.0.0) (2023-11-17)
+
+### ⚠ BREAKING CHANGES
+
+- use `@sanity/preview-url-secret` to handle Draft Mode
+
+### Features
+
+- use `@sanity/preview-url-secret` to handle Draft Mode ([978bc0d](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/978bc0d54f2553d2ee98ab17673d5f27a4299c18))
+
 ## [2.6.1](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v2.6.0...v2.6.1) (2023-11-15)
 
 ### Bug Fixes
