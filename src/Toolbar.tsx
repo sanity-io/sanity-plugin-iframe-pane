@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-bind */
 import {CopyIcon, LaunchIcon, MobileDeviceIcon, RefreshIcon} from '@sanity/icons'
 import {Box, Button, Card, Flex, Text, Tooltip, useToast} from '@sanity/ui'
 import React, {useRef} from 'react'
@@ -21,24 +20,17 @@ export const sizes: SizeProps = {
 export const DEFAULT_SIZE = `desktop`
 
 export interface ToolbarProps {
-  displayUrl: string
+  url: URL | Error | undefined
   iframeSize: IframeSizeKey
   setIframeSize: (size: IframeSizeKey) => void
-  showDisplayUrl: boolean
+  showUrl: boolean
   reloading: boolean
   reloadButton: boolean
   handleReload: () => void
 }
 export function Toolbar(props: ToolbarProps) {
-  const {
-    displayUrl,
-    iframeSize,
-    setIframeSize,
-    reloading,
-    showDisplayUrl,
-    reloadButton,
-    handleReload,
-  } = props
+  const {url, iframeSize, setIframeSize, reloading, showUrl, reloadButton, handleReload} = props
+  const validUrl = url instanceof URL
 
   const input = useRef<HTMLTextAreaElement>(null)
   const {push: pushToast} = useToast()
@@ -49,7 +41,7 @@ export function Toolbar(props: ToolbarProps) {
       <textarea
         style={{position: `absolute`, pointerEvents: `none`, opacity: 0}}
         ref={input}
-        value={displayUrl}
+        value={validUrl ? url.toString() : ''}
         readOnly
         tabIndex={-1}
       />
@@ -66,7 +58,7 @@ export function Toolbar(props: ToolbarProps) {
               placement="bottom-start"
             >
               <Button
-                disabled={!displayUrl}
+                disabled={!validUrl}
                 fontSize={[1]}
                 padding={2}
                 mode={iframeSize === 'mobile' ? 'default' : 'ghost'}
@@ -75,9 +67,7 @@ export function Toolbar(props: ToolbarProps) {
               />
             </Tooltip>
           </Flex>
-          <Box flex={1}>
-            {showDisplayUrl && displayUrl && <DisplayUrl displayUrl={displayUrl} />}
-          </Box>
+          <Box flex={1}>{showUrl && validUrl && <DisplayUrl url={url} />}</Box>
           <Flex align="center" gap={1}>
             {reloadButton ? (
               <Tooltip
@@ -89,7 +79,7 @@ export function Toolbar(props: ToolbarProps) {
                 padding={2}
               >
                 <Button
-                  disabled={!displayUrl}
+                  disabled={!validUrl}
                   mode="bleed"
                   fontSize={[1]}
                   padding={2}
@@ -110,7 +100,7 @@ export function Toolbar(props: ToolbarProps) {
             >
               <Button
                 mode="bleed"
-                disabled={!displayUrl}
+                disabled={!validUrl}
                 fontSize={[1]}
                 icon={CopyIcon}
                 padding={[2]}
@@ -137,14 +127,14 @@ export function Toolbar(props: ToolbarProps) {
               placement="bottom-end"
             >
               <Button
-                disabled={!displayUrl}
+                disabled={!validUrl}
                 fontSize={[1]}
                 icon={LaunchIcon}
                 mode="ghost"
                 paddingY={[2]}
                 text="Open"
                 aria-label="Open URL in a new tab"
-                onClick={() => window.open(displayUrl)}
+                onClick={validUrl ? () => window.open(url.toString()) : undefined}
               />
             </Tooltip>
           </Flex>

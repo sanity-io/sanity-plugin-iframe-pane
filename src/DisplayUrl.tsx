@@ -1,20 +1,15 @@
+import {getRedirectTo} from '@sanity/preview-url-secret/get-redirect-to'
 import {Text} from '@sanity/ui'
 import React, {useMemo} from 'react'
 
-export function DisplayUrl({displayUrl}: {displayUrl: string}) {
+export function DisplayUrl(props: {url: URL}) {
   const truncatedUrl = useMemo(() => {
-    const url = new URL(displayUrl)
-
-    if (url.searchParams.has('secret')) {
-      url.searchParams.delete('secret')
-      url.searchParams.append('secret', '***')
-    }
-
+    const url = getRedirectTo(props.url)
     return `${url.origin === location.origin ? '' : url.origin}${url.pathname}${url.search}`
-  }, [displayUrl])
+  }, [props.url])
 
   return (
-    <Text size={0} textOverflow="ellipsis" title={displayUrl}>
+    <Text size={0} textOverflow="ellipsis">
       {truncatedUrl}
     </Text>
   )

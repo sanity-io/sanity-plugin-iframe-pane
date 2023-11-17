@@ -87,20 +87,23 @@ url: (doc) => resolveProductionUrl(doc),
 // OR a string
 url: `https://sanity.io`,
 
+// OR a configuration for usage with `@sanity/preview-url-secret` and Next.js Draft Mode
+url: {
+  origin: 'https://sanity.io' // or 'same-origin' if the app and studio are on the same origin
+  preview: (document) => document?.slug?.current ? `/posts/${document.slug.current}` : new Error('Missing slug'),
+  draftMode: '/api/draft' // the route you enable draft mode, see: https://github.com/sanity-io/visual-editing/tree/main/packages/preview-url-secret#sanitypreview-url-secret
+},
+
 // Optional: Display the Url in the pane
 showDisplayUrl: true // boolean. default `true`.
 
 // Optional: Set the default size
 defaultSize: `mobile`, // default `desktop`
 
-// Optional: Add a reload button, or reload on new document revisions
+// Optional: Add a reload button
 reload: {
   button: true, // default `undefined`
-  revision: true, // boolean | number. default `undefined`. If a number is provided, add a delay (in ms) before the automatic reload on document revision. If `true` then a curated delay is used. Use `0` to have zero delay.`
 },
-
-// Optional: Display a spinner while the iframe is loading
-loader: true // boolean | string. default `'Loading…'`. If a string is provided, it will be display below the spinner (e.g. Loading…)
 
 // Optional: Pass attributes to the underlying `iframe` element:
 // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe
