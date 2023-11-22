@@ -77,10 +77,9 @@ export interface IframeProps {
 }
 
 export function Iframe(props: IframeProps) {
-  const {
-    document: {published, draft = published},
-    options,
-  } = props
+  const {document, options} = props
+  const draft = document.draft || document.published
+
   const {defaultSize = DEFAULT_SIZE, reload, attributes, showDisplayUrl = true, key} = options
 
   const urlRef = useRef(options.url)
