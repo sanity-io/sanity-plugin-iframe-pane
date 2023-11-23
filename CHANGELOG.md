@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.2](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v3.1.1...v3.1.2) (2023-11-23)
+
+### Bug Fixes
+
+- draft document default assignment ([#90](https://github.com/sanity-io/sanity-plugin-iframe-pane/issues/90)) ([ad862ec](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/ad862ec8fb59c0306494ee7080d6a74d96add6d5))
+
 ## [3.1.1](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v3.1.0...v3.1.1) (2023-11-17)
 
 ### Bug Fixes
