@@ -70,6 +70,7 @@ const MotionFlex = motion(Flex)
 
 export interface IframeProps {
   document: {
+    displayed: SanityDocument
     draft: SanityDocument | null
     published: SanityDocument | null
   }
@@ -78,7 +79,7 @@ export interface IframeProps {
 
 export function Iframe(props: IframeProps) {
   const {document, options} = props
-  const draft = document.draft || document.published
+  const draft = document.draft || document.published || document.displayed
 
   const {defaultSize = DEFAULT_SIZE, reload, attributes, showDisplayUrl = true, key} = options
 
