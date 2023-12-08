@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.3](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v3.1.2...v3.1.3) (2023-12-08)
+
+### Bug Fixes
+
+- **deps:** update dependency @sanity/preview-url-secret to ^1.3.3 ([#95](https://github.com/sanity-io/sanity-plugin-iframe-pane/issues/95)) ([32c66d8](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/32c66d8a32cd656f4e298ecd8ed0db6d928a5a0e))
+
 ## [3.1.2](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v3.1.1...v3.1.2) (2023-11-23)
 
 ### Bug Fixes
