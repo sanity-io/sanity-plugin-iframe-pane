@@ -49,6 +49,7 @@ export function Toolbar(props: ToolbarProps) {
         <Flex align="center" gap={2}>
           <Flex align="center" gap={1}>
             <Tooltip
+              animate
               content={
                 <Text size={1} style={{whiteSpace: 'nowrap'}}>
                   {iframeSize === 'mobile' ? 'Exit mobile preview' : 'Preview mobile viewport'}
@@ -71,6 +72,7 @@ export function Toolbar(props: ToolbarProps) {
           <Flex align="center" gap={1}>
             {reloadButton ? (
               <Tooltip
+                animate
                 content={
                   <Text size={1} style={{whiteSpace: 'nowrap'}}>
                     {reloading ? 'Reloading…' : 'Reload'}
@@ -91,6 +93,7 @@ export function Toolbar(props: ToolbarProps) {
               </Tooltip>
             ) : null}
             <Tooltip
+              animate
               content={
                 <Text size={1} style={{whiteSpace: 'nowrap'}}>
                   Copy URL
@@ -118,6 +121,7 @@ export function Toolbar(props: ToolbarProps) {
               />
             </Tooltip>
             <Tooltip
+              animate
               content={
                 <Text size={1} style={{whiteSpace: 'nowrap'}}>
                   Open URL in a new tab
