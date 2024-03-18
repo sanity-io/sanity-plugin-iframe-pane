@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.4](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v3.1.3...v3.1.4) (2024-03-18)
+
+### Bug Fixes
+
+- `document` should never be `null` ([#92](https://github.com/sanity-io/sanity-plugin-iframe-pane/issues/92)) ([1c4cdd3](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/1c4cdd36b8abe2972ff4f78205c3350e33635066))
+
 ## [3.1.3](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v3.1.2...v3.1.3) (2023-12-08)
 
 ### Bug Fixes
