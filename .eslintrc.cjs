@@ -7,10 +7,8 @@ module.exports = {
     },
   },
   extends: [
-    'react-app',
     'sanity/react', // must come before sanity/typescript
     'sanity/typescript',
-    'plugin:react-hooks/recommended',
     'plugin:prettier/recommended',
   ],
   overrides: [
@@ -21,7 +19,7 @@ module.exports = {
       },
     },
   ],
-  plugins: ['simple-import-sort', 'prettier'],
+  plugins: ['prettier'],
   rules: {
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/explicit-module-boundary-types': 0,

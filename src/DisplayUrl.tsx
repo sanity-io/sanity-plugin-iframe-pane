@@ -1,6 +1,6 @@
 import {getRedirectTo} from '@sanity/preview-url-secret/get-redirect-to'
 import {Text} from '@sanity/ui'
-import React, {useMemo} from 'react'
+import {useMemo} from 'react'
 
 export function DisplayUrl(props: {url: URL}) {
   const truncatedUrl = useMemo(() => {

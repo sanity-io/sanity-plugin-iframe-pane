@@ -3,7 +3,8 @@ import {createPreviewSecret} from '@sanity/preview-url-secret/create-secret'
 import {definePreviewUrl} from '@sanity/preview-url-secret/define-preview-url'
 import {Box, Card, Container, Flex, Spinner, Stack, Text, usePrefersReducedMotion} from '@sanity/ui'
 import {AnimatePresence, motion, MotionConfig} from 'framer-motion'
-import React, {
+import type {HTMLAttributeReferrerPolicy} from 'react'
+import {
   forwardRef,
   memo,
   Suspense,
@@ -13,12 +14,11 @@ import React, {
   useState,
   useTransition,
 } from 'react'
-import {HTMLAttributeReferrerPolicy} from 'react'
-import {SanityDocument, useClient, useCurrentUser} from 'sanity'
+import {type SanityDocument, useClient, useCurrentUser} from 'sanity'
 import {suspend} from 'suspend-react'
 
 import {DEFAULT_SIZE, sizes, Toolbar} from './Toolbar'
-import {IframeSizeKey} from './types'
+import type {IframeSizeKey} from './types'
 
 export type UrlResolver = (
   document: SanityDocument | null,
@@ -239,7 +239,7 @@ const IframeInner = memo(function IframeInner(props: IframeInnerProps) {
 
   return (
     <MotionConfig transition={prefersReducedMotion ? {duration: 0} : undefined}>
-      <Flex direction="column" style={{height: `100%`}}>
+      <Flex direction="column" style={{height: '100%'}}>
         <Toolbar
           url={url}
           iframeSize={iframeSize}
@@ -252,7 +252,7 @@ const IframeInner = memo(function IframeInner(props: IframeInnerProps) {
         {url instanceof Error ? (
           <ErrorCard error={url} />
         ) : (
-          <Card tone="transparent" style={{height: `100%`}}>
+          <Card tone="transparent" style={{height: '100%'}}>
             <Frame
               ref={iframe}
               loading={loading}
@@ -294,7 +294,7 @@ const Frame = forwardRef(function Frame(
   }
 
   return (
-    <Flex align="center" justify="center" style={{height: `100%`, position: `relative`}}>
+    <Flex align="center" justify="center" style={{height: '100%', position: 'relative'}}>
       <AnimatePresence>
         {!url ||
           (loading && (
@@ -305,7 +305,7 @@ const Frame = forwardRef(function Frame(
               variants={spinnerVariants}
               justify="center"
               align="center"
-              style={{inset: `0`, position: `absolute`}}
+              style={{inset: '0', position: 'absolute'}}
             >
               <Loading iframeSize={iframeSize} />
             </MotionFlex>

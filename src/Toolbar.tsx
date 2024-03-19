@@ -1,10 +1,10 @@
 import {CopyIcon, LaunchIcon, MobileDeviceIcon, RefreshIcon} from '@sanity/icons'
 import {Box, Button, Card, Flex, Text, Tooltip, useToast} from '@sanity/ui'
-import React, {useRef} from 'react'
+import {useRef} from 'react'
 import {useCopyToClipboard} from 'usehooks-ts'
 
 import {DisplayUrl} from './DisplayUrl'
-import {IframeSizeKey, type SizeProps} from './types'
+import type {IframeSizeKey, SizeProps} from './types'
 
 export const sizes: SizeProps = {
   desktop: {
@@ -17,7 +17,7 @@ export const sizes: SizeProps = {
   },
 }
 
-export const DEFAULT_SIZE = `desktop`
+export const DEFAULT_SIZE = 'desktop'
 
 export interface ToolbarProps {
   url: URL | Error | undefined
@@ -39,7 +39,7 @@ export function Toolbar(props: ToolbarProps) {
   return (
     <>
       <textarea
-        style={{position: `absolute`, pointerEvents: `none`, opacity: 0}}
+        style={{position: 'absolute', pointerEvents: 'none', opacity: 0}}
         ref={input}
         value={validUrl ? url.toString() : ''}
         readOnly
