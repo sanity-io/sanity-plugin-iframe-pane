@@ -54,7 +54,7 @@
     "@sanity/ui": "^2.0.10",
     "framer-motion": "11.0.8",
     "suspend-react": "0.1.3",
-    "usehooks-ts": "2.16.0"
+    "usehooks-ts": "3.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.2.0",
