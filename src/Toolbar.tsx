@@ -111,11 +111,20 @@ export function Toolbar(props: ToolbarProps) {
                 onClick={() => {
                   if (!input?.current?.value) return
 
-                  copy(input.current.value)
-                  pushToast({
-                    closable: true,
-                    status: 'success',
-                    title: 'The URL is copied to the clipboard',
+                  copy(input.current.value).then((copied) => {
+                    if (copied) {
+                      pushToast({
+                        closable: true,
+                        status: 'success',
+                        title: 'The URL is copied to the clipboard',
+                      })
+                    } else {
+                      pushToast({
+                        closable: true,
+                        status: 'error',
+                        title: 'Failed to copy the URL to the clipboard',
+                      })
+                    }
                   })
                 }}
               />
