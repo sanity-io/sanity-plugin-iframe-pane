@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.6](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v3.1.5...v3.1.6) (2024-03-19)
+
+### Bug Fixes
+
+- **deps:** Update dependency usehooks-ts to v3 ([#111](https://github.com/sanity-io/sanity-plugin-iframe-pane/issues/111)) ([7073a5b](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/7073a5b292733877d13f01f7fb128a20c169083e))
+- make new linter rules pass ([feaa2cd](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/feaa2cd6b11a3036de4ac6aa61089218c2a89367))
+- show error toast if URL failed to copy ([aa2d4d3](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/aa2d4d330311463176cd14cb3f0542476658a92d))
+
 ## [3.1.5](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v3.1.4...v3.1.5) (2024-03-18)
 
 ### Bug Fixes
