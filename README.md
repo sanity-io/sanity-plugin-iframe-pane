@@ -25,7 +25,7 @@ yarn add sanity-plugin-iframe-pane
 
 This is designed to be used as a [Component inside of a View](https://www.sanity.io/docs/structure-builder-reference#c0c8284844b7).
 
-The simplest way to configure views is by customizing the `defaultDocumentNode` setting in the `deskTool()` plugin.
+The simplest way to configure views is by customizing the `defaultDocumentNode` setting in the `structureTool()` plugin.
 
 ```ts
 // ./sanity.config.ts
@@ -33,7 +33,7 @@ The simplest way to configure views is by customizing the `defaultDocumentNode` 
 export default defineConfig({
   // ...other config settings
   plugins: [
-    deskTool({
+    structureTool({
       defaultDocumentNode,
       structure, // not required
     }),
@@ -47,9 +47,9 @@ A basic example of a custom `defaultDocumentNode` function, to only show the Ifr
 ```ts
 // ./src/defaultDocumentNode.ts
 
-import {DefaultDocumentNodeResolver} from 'sanity/desk'
+import { type DefaultDocumentNodeResolver } from 'sanity/structure'
 import {Iframe} from 'sanity-plugin-iframe-pane'
-import {SanityDocument} from 'sanity'
+import { type SanityDocument } from 'sanity'
 
 // Customise this function to show the correct URL based on the current document
 function getPreviewUrl(doc: SanityDocument) {
