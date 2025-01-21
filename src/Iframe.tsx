@@ -2,7 +2,7 @@ import {WarningOutlineIcon} from '@sanity/icons'
 import {createPreviewSecret} from '@sanity/preview-url-secret/create-secret'
 import {definePreviewUrl} from '@sanity/preview-url-secret/define-preview-url'
 import {Box, Card, Container, Flex, Spinner, Stack, Text, usePrefersReducedMotion} from '@sanity/ui'
-import {AnimatePresence, motion, MotionConfig} from 'framer-motion'
+import {AnimatePresence, HTMLMotionProps, motion, MotionConfig} from 'framer-motion'
 import type {HTMLAttributeReferrerPolicy} from 'react'
 import {
   forwardRef,
@@ -10,11 +10,18 @@ import {
   Suspense,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
   useTransition,
 } from 'react'
-import {type SanityDocument, useActiveWorkspace, useClient, useCurrentUser} from 'sanity'
+import {
+  type SanityDocument,
+  useActiveWorkspace,
+  useClient,
+  useCurrentUser,
+  usePerspective,
+} from 'sanity'
 import {suspend} from 'suspend-react'
 
 import {DEFAULT_SIZE, sizes, Toolbar} from './Toolbar'
@@ -22,6 +29,10 @@ import type {IframeSizeKey} from './types'
 
 export type UrlResolver = (
   document: SanityDocument | null,
+  perspective: Pick<
+    ReturnType<typeof usePerspective>,
+    'selectedPerspectiveName' | 'perspectiveStack'
+  >,
 ) => string | Error | undefined | Promise<string | Error | undefined>
 
 export type {IframeSizeKey}
@@ -66,7 +77,10 @@ export interface IframeOptions {
   }>
 }
 
-const MotionFlex = motion.create(Flex)
+type MotionIFrameProps = HTMLMotionProps<'iframe'> & React.IframeHTMLAttributes<HTMLIFrameElement>
+
+const MotionFlex = motion(Flex)
+const MotionIFrame = motion<MotionIFrameProps>('iframe')
 
 export interface IframeProps {
   document: {
@@ -100,6 +114,15 @@ export function Iframe(props: IframeProps): React.JSX.Element {
   const [expiresAt, setExpiresAt] = useState<number | undefined>()
   const previewSecretRef = useRef<string | undefined>(undefined)
   const [isResolvingUrl, startTransition] = useTransition()
+  const {perspectiveStack, selectedPerspectiveName} = usePerspective()
+  const perspective = useMemo(
+    () => ({
+      perspectiveStack,
+      selectedPerspectiveName,
+    }),
+    [perspectiveStack, selectedPerspectiveName],
+  )
+
   const url = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-shadow
     async (draft: SanityDocument | null) => {
@@ -112,12 +135,14 @@ export function Iframe(props: IframeProps): React.JSX.Element {
       }
       if (typeof urlProp === 'function') {
         // eslint-disable-next-line @typescript-eslint/no-shadow
-        const url = await urlProp(draft)
+        const url = await urlProp(draft, perspective)
         return typeof url === 'string' ? new URL(url, location.origin) : url
       }
       if (typeof urlProp === 'object') {
         const preview =
-          typeof urlProp.preview === 'function' ? await urlProp.preview(draft) : urlProp.preview
+          typeof urlProp.preview === 'function'
+            ? await urlProp.preview(draft, perspective)
+            : urlProp.preview
         if (typeof preview !== 'string') {
           return preview
         }
@@ -152,7 +177,7 @@ export function Iframe(props: IframeProps): React.JSX.Element {
       }
       return undefined
     },
-    [client, currentUser?.id, basePath],
+    [basePath, client, currentUser?.id, perspective],
   )
   useEffect(() => {
     if (expiresAt) {
@@ -171,12 +196,13 @@ export function Iframe(props: IframeProps): React.JSX.Element {
   return (
     <Suspense fallback={<Loading iframeSize="desktop" />}>
       <IframeInner
-        key={draftSnapshot.key}
+        key={`${draftSnapshot.key}-${selectedPerspectiveName || 'draft'}`}
         _key={draftSnapshot.key}
         draftSnapshot={draftSnapshot.draft}
         url={url}
         isResolvingUrl={isResolvingUrl}
         attributes={attributes}
+        perspective={perspective}
         defaultSize={defaultSize}
         reload={reload}
         showDisplayUrl={showDisplayUrl}
@@ -190,6 +216,7 @@ export interface IframeInnerProps extends Omit<IframeOptions, 'url'> {
   url: (draftSnapshot: SanityDocument | null) => Promise<URL | Error | undefined>
   isResolvingUrl: boolean
   draftSnapshot: SanityDocument | null
+  perspective: Parameters<UrlResolver>[1]
   userId?: string
   expiresAt?: number
   _key?: string
@@ -204,6 +231,7 @@ const IframeInner = memo(function IframeInner(props: IframeInnerProps) {
     draftSnapshot,
     userId,
     expiresAt,
+    perspective: {selectedPerspectiveName, perspectiveStack},
     _key,
   } = props
   const [iframeSize, setIframeSize] = useState(sizes?.[defaultSize] ? defaultSize : DEFAULT_SIZE)
@@ -216,6 +244,8 @@ const IframeInner = memo(function IframeInner(props: IframeInnerProps) {
       // Cache based on a few specific conditions
       'sanity-plugin-iframe-pane',
       draftSnapshot,
+      selectedPerspectiveName,
+      perspectiveStack,
       userId,
       expiresAt,
       _key,
@@ -316,7 +346,7 @@ const Frame = forwardRef(function Frame(
           ))}
       </AnimatePresence>
       {url && (
-        <motion.iframe
+        <MotionIFrame
           ref={iframe}
           title="preview"
           frameBorder="0"
