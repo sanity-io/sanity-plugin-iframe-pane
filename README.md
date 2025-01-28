@@ -48,13 +48,13 @@ A basic example of a custom `defaultDocumentNode` function, to only show the Ifr
 // ./src/defaultDocumentNode.ts
 
 import {type DefaultDocumentNodeResolver} from 'sanity/structure'
-import {Iframe} from 'sanity-plugin-iframe-pane'
+import {Iframe, UrlResolver} from 'sanity-plugin-iframe-pane'
 import {type SanityDocument} from 'sanity'
 
-// Customise this function to show the correct URL based on the current document
-function getPreviewUrl(doc: SanityDocument) {
+// Customise this function to show the correct URL based on the current document and the current studio perspective
+const getPreviewUrl: UrlResolver = (doc, perspective) => {
   return doc?.slug?.current
-    ? `${window.location.host}/${doc.slug.current}`
+    ? `${window.location.host}/${doc.slug.current}?perspective=${perspective.perspectiveStack}`
     : `${window.location.host}`
 }
 
@@ -68,7 +68,7 @@ export const defaultDocumentNode: DefaultDocumentNodeResolver = (S, {schemaType}
         S.view
           .component(Iframe)
           .options({
-            url: (doc: SanityDocument) => getPreviewUrl(doc),
+            url: getPreviewUrl,
           })
           .title('Preview'),
       ])
@@ -82,7 +82,7 @@ export const defaultDocumentNode: DefaultDocumentNodeResolver = (S, {schemaType}
 
 ```js
 // Required: Accepts an async function
-url: (doc) => resolveProductionUrl(doc),
+url: (doc, {perspectiveStack, selectedPerspectiveName}) => resolveProductionUrl(doc),
 
 // OR a string
 url: `https://sanity.io`,
@@ -90,7 +90,7 @@ url: `https://sanity.io`,
 // OR a configuration for usage with `@sanity/preview-url-secret` and Next.js Draft Mode
 url: {
   origin: 'https://sanity.io' // or 'same-origin' if the app and studio are on the same origin
-  preview: (document) => document?.slug?.current ? `/posts/${document.slug.current}` : new Error('Missing slug'),
+  preview: (document, {perspectiveStack, selectedPerspective}) => document?.slug?.current ? `/posts/${document.slug.current}` : new Error('Missing slug'),
   draftMode: '/api/draft' // the route you enable draft mode, see: https://github.com/sanity-io/visual-editing/tree/main/packages/preview-url-secret#sanitypreview-url-secret
 },
 
