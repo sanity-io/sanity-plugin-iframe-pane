@@ -2,7 +2,7 @@ import {WarningOutlineIcon} from '@sanity/icons'
 import {createPreviewSecret} from '@sanity/preview-url-secret/create-secret'
 import {definePreviewUrl} from '@sanity/preview-url-secret/define-preview-url'
 import {Box, Card, Container, Flex, Spinner, Stack, Text, usePrefersReducedMotion} from '@sanity/ui'
-import {AnimatePresence, HTMLMotionProps, motion, MotionConfig} from 'framer-motion'
+import {AnimatePresence, motion, MotionConfig} from 'framer-motion'
 import type {HTMLAttributeReferrerPolicy} from 'react'
 import {
   forwardRef,
@@ -77,10 +77,7 @@ export interface IframeOptions {
   }>
 }
 
-type MotionIFrameProps = HTMLMotionProps<'iframe'> & React.IframeHTMLAttributes<HTMLIFrameElement>
-
-const MotionFlex = motion(Flex)
-const MotionIFrame = motion<MotionIFrameProps>('iframe')
+const MotionFlex = motion.create(Flex)
 
 export interface IframeProps {
   document: {
@@ -89,6 +86,10 @@ export interface IframeProps {
     published: SanityDocument | null
   }
   options: IframeOptions
+}
+
+function encodeStudioPerspective(studioPerspective: string[] | string): string {
+  return Array.isArray(studioPerspective) ? studioPerspective.join(',') : studioPerspective
 }
 
 export function Iframe(props: IframeProps): React.JSX.Element {
@@ -171,7 +172,7 @@ export function Iframe(props: IframeProps): React.JSX.Element {
           previewUrlSecret: previewSecretRef.current,
           previewSearchParam: null,
           studioBasePath: basePath,
-          studioPreviewPerspective: 'previewDrafts',
+          studioPreviewPerspective: encodeStudioPerspective(perspective.perspectiveStack),
         })
         return new URL(url, location.origin)
       }
@@ -346,7 +347,7 @@ const Frame = forwardRef(function Frame(
           ))}
       </AnimatePresence>
       {url && (
-        <MotionIFrame
+        <motion.iframe
           ref={iframe}
           title="preview"
           frameBorder="0"
