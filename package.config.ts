@@ -3,8 +3,6 @@ import {defineConfig} from '@sanity/pkg-utils'
 export default defineConfig({
   dist: 'lib',
   tsconfig: 'tsconfig.lib.json',
-
-  // Remove this block to enable strict export validation
   extract: {
     rules: {
       'ae-incompatible-release-tags': 'off',

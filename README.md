@@ -47,9 +47,9 @@ A basic example of a custom `defaultDocumentNode` function, to only show the Ifr
 ```ts
 // ./src/defaultDocumentNode.ts
 
-import { type DefaultDocumentNodeResolver } from 'sanity/structure'
-import { Iframe } from 'sanity-plugin-iframe-pane'
-import { type SanityDocument } from 'sanity'
+import {type DefaultDocumentNodeResolver} from 'sanity/structure'
+import {Iframe} from 'sanity-plugin-iframe-pane'
+import {type SanityDocument} from 'sanity'
 
 // Customise this function to show the correct URL based on the current document
 function getPreviewUrl(doc: SanityDocument) {
