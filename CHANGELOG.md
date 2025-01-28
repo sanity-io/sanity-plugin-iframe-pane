@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.0](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v3.1.6...v3.2.0) (2025-01-28)
+
+### Features
+
+- add react 19 ([#119](https://github.com/sanity-io/sanity-plugin-iframe-pane/issues/119)) ([be06cbc](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/be06cbce881d48e9f0f3c43acdb89486d05c0ea2))
+
 ## [3.1.6](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v3.1.5...v3.1.6) (2024-03-19)
 
 ### Bug Fixes
