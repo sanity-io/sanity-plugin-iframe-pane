@@ -14,7 +14,7 @@ import {
   useState,
   useTransition,
 } from 'react'
-import {type SanityDocument, useClient, useCurrentUser} from 'sanity'
+import {type SanityDocument, useActiveWorkspace, useClient, useCurrentUser} from 'sanity'
 import {suspend} from 'suspend-react'
 
 import {DEFAULT_SIZE, sizes, Toolbar} from './Toolbar'
@@ -66,7 +66,7 @@ export interface IframeOptions {
   }>
 }
 
-const MotionFlex = motion(Flex)
+const MotionFlex = motion.create(Flex)
 
 export interface IframeProps {
   document: {
@@ -77,12 +77,14 @@ export interface IframeProps {
   options: IframeOptions
 }
 
-export function Iframe(props: IframeProps) {
+export function Iframe(props: IframeProps): React.JSX.Element {
   const {document, options} = props
   const draft = document.draft || document.published || document.displayed
 
   const {defaultSize = DEFAULT_SIZE, reload, attributes, showDisplayUrl = true, key} = options
 
+  const workspace = useActiveWorkspace()
+  const basePath = workspace?.activeWorkspace?.basePath || '/'
   const urlRef = useRef(options.url)
   const [draftSnapshot, setDraftSnapshot] = useState(() => ({key, draft}))
   useEffect(() => {
@@ -96,7 +98,7 @@ export function Iframe(props: IframeProps) {
   const currentUser = useCurrentUser()
   const client = useClient({apiVersion: '2023-10-16'})
   const [expiresAt, setExpiresAt] = useState<number | undefined>()
-  const previewSecretRef = useRef<string | undefined>()
+  const previewSecretRef = useRef<string | undefined>(undefined)
   const [isResolvingUrl, startTransition] = useTransition()
   const url = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -143,12 +145,14 @@ export function Iframe(props: IframeProps) {
           client,
           previewUrlSecret: previewSecretRef.current,
           previewSearchParam: null,
+          studioBasePath: basePath,
+          studioPreviewPerspective: 'previewDrafts',
         })
         return new URL(url, location.origin)
       }
       return undefined
     },
-    [client, currentUser?.id],
+    [client, currentUser?.id, basePath],
   )
   useEffect(() => {
     if (expiresAt) {

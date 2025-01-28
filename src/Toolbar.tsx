@@ -1,7 +1,6 @@
 import {CopyIcon, LaunchIcon, MobileDeviceIcon, RefreshIcon} from '@sanity/icons'
 import {Box, Button, Card, Flex, Text, Tooltip, useToast} from '@sanity/ui'
-import {useRef} from 'react'
-import {useCopyToClipboard} from 'usehooks-ts'
+import {useCallback, useRef, useState} from 'react'
 
 import {DisplayUrl} from './DisplayUrl'
 import type {IframeSizeKey, SizeProps} from './types'
@@ -155,4 +154,32 @@ export function Toolbar(props: ToolbarProps) {
       </Card>
     </>
   )
+}
+
+type CopiedValue = string | null
+
+type CopyFn = (text: string) => Promise<boolean>
+
+function useCopyToClipboard(): [CopiedValue, CopyFn] {
+  const [copiedText, setCopiedText] = useState<CopiedValue>(null)
+
+  const copy: CopyFn = useCallback(async (text) => {
+    if (!navigator?.clipboard) {
+      console.warn('Clipboard not supported')
+      return false
+    }
+
+    // Try to save to clipboard then save it in the state if worked
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopiedText(text)
+      return true
+    } catch (error) {
+      console.warn('Copy failed', error)
+      setCopiedText(null)
+      return false
+    }
+  }, [])
+
+  return [copiedText, copy]
 }

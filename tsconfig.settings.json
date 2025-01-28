@@ -1,19 +1,7 @@
 {
+  "extends": "@sanity/pkg-utils/tsconfig/strictest.json",
   "compilerOptions": {
-    "moduleResolution": "node",
-    "target": "esnext",
-    "module": "esnext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "esModuleInterop": true,
-    "strict": true,
-    "downlevelIteration": true,
-    "declaration": true,
-    "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true,
-    "isolatedModules": true,
-    "allowJs": true,
-    "forceConsistentCasingInFileNames": true,
-
-    "resolveJsonModule": true
+    "rootDir": ".",
+    "outDir": "lib"
   }
 }

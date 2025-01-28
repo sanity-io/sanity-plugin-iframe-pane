@@ -1,11 +1,5 @@
 {
   "extends": "./tsconfig.settings",
   "include": ["./src", "./package.config.ts"],
-  "compilerOptions": {
-    "rootDir": ".",
-    "jsx": "preserve",
-    "incremental": true,
-    "noEmit": true
-  },
   "exclude": ["node_modules"]
 }
