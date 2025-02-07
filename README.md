@@ -48,13 +48,14 @@ A basic example of a custom `defaultDocumentNode` function, to only show the Ifr
 // ./src/defaultDocumentNode.ts
 
 import {type DefaultDocumentNodeResolver} from 'sanity/structure'
+import {urlSearchParamPreviewPerspective} from '@sanity/preview-url-secret/constants'
 import {Iframe, UrlResolver} from 'sanity-plugin-iframe-pane'
 import {type SanityDocument} from 'sanity'
 
 // Customise this function to show the correct URL based on the current document and the current studio perspective
 const getPreviewUrl: UrlResolver = (doc, perspective) => {
   return doc?.slug?.current
-    ? `${window.location.host}/${doc.slug.current}?perspective=${perspective.perspectiveStack}`
+    ? `${window.location.host}/${doc.slug.current}?${urlSearchParamPreviewPerspective}=${perspective.perspectiveStack}`
     : `${window.location.host}`
 }
 
