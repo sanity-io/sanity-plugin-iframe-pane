@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.2](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v3.2.1...v3.2.2) (2025-07-10)
+
+### Bug Fixes
+
+- **deps:** allow studio v4 in peer dep ranges + update main ([#129](https://github.com/sanity-io/sanity-plugin-iframe-pane/issues/129)) ([159eef7](https://github.com/sanity-io/sanity-plugin-iframe-pane/commit/159eef7cdb4861c60b5eb320dbcc8cfecc699b92))
+
 ## [3.2.1](https://github.com/sanity-io/sanity-plugin-iframe-pane/compare/v3.2.0...v3.2.1) (2025-02-07)
 
 ### Bug Fixes
