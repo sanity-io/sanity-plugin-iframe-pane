@@ -1,6 +1,5 @@
 # sanity-plugin-iframe-pane
 
-> This is a **Sanity Studio v3** plugin.
 > For the v2 version, please refer to the [v2-branch](https://github.com/sanity-io/sanity-plugin-iframe-pane/tree/studio-v2).
 
 Display any URL in a View Pane, along with helpful buttons to Copy the URL or open it in a new tab.
